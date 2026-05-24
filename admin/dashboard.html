@@ -1,0 +1,178 @@
+<!-- admin/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/admin.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>Temple Monitor</h2>
+        </div>
+        <ul>
+
+    <li class="active">
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="users.html">
+            <i class="fa-solid fa-users"></i>
+            Users
+        </a>
+    </li>
+
+    <li>
+        <a href="live-recording.html">
+            <i class="fa-solid fa-video"></i>
+            Live Recording
+        </a>
+    </li>
+
+    <li>
+        <a href="notifications.html">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </a>
+    </li>
+
+    <li>
+        <a href="reports.html">
+            <i class="fa-solid fa-file"></i>
+            Reports
+        </a>
+    </li>
+
+    <li>
+        <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+    </li>
+
+    <li>
+        <a href="../login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+       
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOP NAVBAR -->
+        <div class="topbar">
+
+            <h1>Admin Dashboard</h1>
+
+            <div class="topbar-right">
+
+                <!-- CLOCK -->
+                <div class="clock" id="clock">
+                    00:00:00
+                </div>
+
+                <!-- NOTIFICATION -->
+                <div class="notification">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <!-- PROFILE -->
+                <div class="profile">
+                    Admin
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Violations</h3>
+                <p>42</p>
+            </div>
+
+            <div class="card">
+                <h3>Today's Violations</h3>
+                <p>5</p>
+            </div>
+
+            <div class="card">
+                <h3>Active Cameras</h3>
+                <p>4</p>
+            </div>
+
+            <div class="card">
+                <h3>Alert Status</h3>
+                <p>Active</p>
+            </div>
+
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+
+            <!-- LIVE FEED -->
+            <div class="live-feed">
+
+                <h2>Live Camera Feed</h2>
+
+                <div class="video-placeholder">
+                    Live CCTV Feed Here
+                </div>
+
+            </div>
+
+            <!-- RECENT ALERTS -->
+            <div class="recent-alerts">
+
+                <h2>Recent Alerts</h2>
+
+                <div class="alert-box">
+                    ⚠️ No Hairnet Detected - Kitchen Entry
+                </div>
+
+                <div class="alert-box">
+                    ⚠️ No Gloves Detected - Food Area
+                </div>
+
+                <div class="alert-box">
+                    ⚠️ No Apron Detected - Main Entry
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="../js/admin.js"></script>
+
+</body>
+</html>

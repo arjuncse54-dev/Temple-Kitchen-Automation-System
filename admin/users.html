@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Users Management</title>
+
+    <link rel="stylesheet" href="../css/users.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>Temple Monitor</h2>
+        </div>
+          <ul>
+
+    <li>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+    </li>
+
+    <li class="active">
+        <a href="users.html">
+            <i class="fa-solid fa-users"></i>
+            Users
+        </a>
+    </li>
+
+    <li>
+        <a href="live-recording.html">
+            <i class="fa-solid fa-video"></i>
+            Live Recording
+        </a>
+    </li>
+
+    <li>
+        <a href="notifications.html">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </a>
+    </li>
+
+    <li>
+        <a href="reports.html">
+            <i class="fa-solid fa-file"></i>
+            Reports
+        </a>
+    </li>
+
+    <li>
+        <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+    </li>
+
+    <li>
+        <a href="../login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+       
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <h1>Users Management</h1>
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-box">
+
+            <input type="text" id="searchInput"
+            placeholder="Search user by name...">
+
+        </div>
+
+        <!-- USERS TABLE -->
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="userTable">
+
+                    <tr>
+                        <td>Ravi Sharma</td>
+                        <td>ravi@gmail.com</td>
+                        <td>9876543210</td>
+                        <td><span class="status active-status">Active</span></td>
+                        <td>
+                            <button class="inform-btn">
+                                INFORM
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Aman Gupta</td>
+                        <td>aman@gmail.com</td>
+                        <td>9876501234</td>
+                        <td><span class="status active-status">Active</span></td>
+                        <td>
+                            <button class="inform-btn">
+                                INFORM
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Rohit Kumar</td>
+                        <td>rohit@gmail.com</td>
+                        <td>9998877665</td>
+                        <td><span class="status inactive-status">Inactive</span></td>
+                        <td>
+                            <button class="inform-btn">
+                                INFORM
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- CUSTOM POPUP -->
+
+<div class="custom-popup" id="popup">
+
+    <i class="fa-solid fa-circle-check" id="popupIcon"></i>
+
+    <span id="popupText">
+        Notification Sent Successfully!
+    </span>
+
+</div>
+ <script src="../js/users.js"></script>
+
+</body>
+</html>

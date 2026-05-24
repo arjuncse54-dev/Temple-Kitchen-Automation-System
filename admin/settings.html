@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Settings</title>
+
+    <link rel="stylesheet"
+    href="../css/settings.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>Temple Monitor</h2>
+        </div>
+          <ul>
+
+    <li>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="users.html">
+            <i class="fa-solid fa-users"></i>
+            Users
+        </a>
+    </li>
+
+    <li>
+        <a href="live-recording.html">
+            <i class="fa-solid fa-video"></i>
+            Live Recording
+        </a>
+    </li>
+
+    <li>
+        <a href="notifications.html">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </a>
+    </li>
+
+    <li>
+        <a href="reports.html">
+            <i class="fa-solid fa-file"></i>
+            Reports
+        </a>
+    </li>
+
+    <li class="active">
+        <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+    </li>
+
+    <li>
+        <a href="../login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+       
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <h1>System Settings</h1>
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+
+        </div>
+
+        <!-- SETTINGS CARD -->
+        <div class="settings-container">
+
+            <!-- CAMERA SETTINGS -->
+            <div class="settings-card">
+
+                <h2>Camera Settings</h2>
+
+                <label>Camera URL</label>
+
+                <input type="text" id="cameraUrl"
+                placeholder="Enter Camera RTSP URL">
+
+            </div>
+
+            <!-- NOTIFICATION SETTINGS -->
+            <div class="settings-card">
+
+                <h2>Notification Settings</h2>
+
+                <div class="toggle-box" >
+
+                    <span>Enable Notifications</span>
+
+                    <label class="switch">
+
+                        <input type="checkbox"  id="notificationToggle" checked>
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+                <div class="toggle-box">
+
+                    <span>Enable Alert Sound</span>
+
+                    <label class="switch">
+
+                        <input type="checkbox" id="soundToggle" checked>
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <!-- SYSTEM STATUS -->
+            <div class="settings-card">
+
+                <h2>System Status</h2>
+
+                <div class="status-box active-status">
+                    ● AI Detection Active
+                </div>
+
+                <div class="status-box active-status">
+                    ● Camera Connected
+                </div>
+
+                <div class="status-box active-status">
+                    ● Notifications Active
+                </div>
+
+            </div>
+
+            <!-- SAVE BUTTON -->
+            <button class="save-btn">
+                Save Settings
+            </button>
+
+        </div>
+
+    </div>
+    <!-- CUSTOM POPUP -->
+
+<div class="custom-popup" id="popup">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="popupText">
+    Settings Saved Successfully!          
+    </span>
+
+</div>
+
+    <script src="../js/settings.js"></script>
+
+</body>
+</html>

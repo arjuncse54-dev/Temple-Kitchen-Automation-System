@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+
+    <link rel="stylesheet" href="../css/reports.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>Temple Monitor</h2>
+        </div>
+          <ul>
+
+    <li>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="users.html">
+            <i class="fa-solid fa-users"></i>
+            Users
+        </a>
+    </li>
+
+    <li>
+        <a href="live-recording.html">
+            <i class="fa-solid fa-video"></i>
+            Live Recording
+        </a>
+    </li>
+
+    <li>
+        <a href="notifications.html">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </a>
+    </li>
+
+    <li class="active">
+        <a href="reports.html">
+            <i class="fa-solid fa-file"></i>
+            Reports
+        </a>
+    </li>
+
+    <li>
+        <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+    </li>
+
+    <li>
+        <a href="../login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+       
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <h1>Reports</h1>
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+
+        </div>
+
+        <!-- FILTER SECTION -->
+        <div class="filter-section">
+
+            <input type="text"
+            id="searchInput"
+            placeholder="Search user name...">
+
+            <button class="download-btn">
+                Download Report
+            </button>
+
+        </div>
+
+        <!-- REPORT TABLE -->
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>User</th>
+                        <th>Violation</th>
+                        <th>Location</th>
+                        <th>Time</th>
+                        <th>Admin</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="reportTable">
+
+                
+
+                 
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="../js/reports.js"></script>
+
+</body>
+</html>

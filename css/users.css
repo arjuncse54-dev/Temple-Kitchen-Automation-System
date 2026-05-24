@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#111827;
+    color:white;
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    background:#1f2937;
+    padding:20px;
+    position:fixed;
+    height:100%;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo h2{
+     color: rgb(209, 137, 2);
+     border-radius:10px;
+     padding:7px;
+     
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+    background-color:white;
+     box-shadow:0px 0px  15px black;
+    font-weight:700;
+}
+.sidebar ul li:hover{
+    background-color:rgb(254, 169, 11);
+    color:black;
+}
+.sidebar ul .active{
+    background-color:rgb(106, 106, 106);
+    color:white;
+}
+
+a{
+    text-decoration:none;
+}
+
+
+.sidebar ul li i{
+    margin-right:10px;
+}
+
+/* MAIN */
+
+.main-content{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:20px;
+}
+
+/* TOPBAR */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+.topbar h1{
+    
+    padding:8px 8px;
+    border-radius:25px;
+    border:2px solid orange;
+}
+
+.clock{
+    background:#1f2937;
+    padding:10px 15px;
+    border-radius:10px;
+     box-shadow:0px 0px  15px black;
+}
+
+/* SEARCH */
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#1f2937;
+    color:white;
+    outline:none;
+    box-shadow:0px 0px  15px black;
+}
+
+/* TABLE */
+
+.table-container{
+    overflow-x:auto;
+     box-shadow:0px 0px  15px black;
+    
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#1f2937;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+thead{
+    background:#2563eb;
+}
+
+th,td{
+    padding:15px;
+    text-align:left;
+}
+
+tr{
+    border-bottom:1px solid #374151;
+}
+
+.status{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.active-status{
+    background:green;
+}
+
+.inactive-status{
+    background:#dc2626;
+}
+
+/* BUTTON */
+
+.inform-btn{
+    background:rgb(34, 34, 249);
+    border:none;
+    color:white;
+    padding:10px ;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0px 0px 10px blue;
+}
+
+.inform-btn:hover{
+    background:green;
+    box-shadow:0px 0px 15px rgb(1, 98, 1);
+}
+/* CUSTOM POPUP */
+
+.custom-popup{
+
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    background: #16a34a;
+
+    color: white;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 15px;
+
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translateX(100px);
+
+    transition: 0.4s;
+
+    z-index: 1000;
+}
+
+/* SHOW POPUP */
+
+.custom-popup.show{
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform: translateX(0);
+
+}
+/* SUCCESS */
+
+.success{
+    background: #16a34a;
+}
+
+/* ERROR */
+
+.error{
+    background: #dc2626;
+}
+
+/* WARNING */
+
+.warning{
+    background: #f59e0b;
+}
+
+/* ICON */
+
+.custom-popup i{
+
+    font-size: 20px;
+
+}
+
+/* MOBILE RESPONSIVE */
+
+@media screen and (max-width:500px){
+
+    .custom-popup{
+
+        width: 90%;
+
+        right: 5%;
+
+        top: 15px;
+
+        font-size: 14px;
+
+        padding: 14px;
+
+    }
+
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main-content{
+        width:100%;
+        margin-left:0;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+}
+
+
+@media screen and (max-width:500px){
+
+    th,td{
+        font-size:13px;
+        padding:10px;
+    }
+
+    .inform-btn{
+        padding:8px 10px;
+        font-size:12px;
+    }
+
+}

@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#111827;
+    color:white;
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    background:#1f2937;
+    padding:20px;
+    position:fixed;
+    height:100%;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo h2{
+     color: rgb(209, 137, 2);
+     border-radius:10px;
+     padding:7px;
+     
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+    background-color:white;
+     box-shadow:0px 0px  15px black;
+    font-weight:700;
+}
+.sidebar ul li:hover{
+    background-color:rgb(254, 169, 11);
+    color:black;
+}
+.sidebar ul .active{
+    background-color:rgb(106, 106, 106);
+    color:white;
+}
+
+a{
+    text-decoration:none;
+}
+
+
+
+
+.sidebar ul li i{
+    margin-right:10px;
+}
+
+/* MAIN */
+
+.main-content{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:20px;
+}
+
+/* TOPBAR */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+.topbar h1{
+    
+    padding:8px 8px;
+    border-radius:25px;
+    border:2px solid orange;
+}
+
+.clock{
+    background:#1f2937;
+    padding:10px 15px;
+    border-radius:10px;
+     box-shadow:0px 0px  15px black;
+}
+
+/* LIVE SECTION */
+
+.live-section{
+    background:#1f2937;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:30px;
+     box-shadow:0px 0px  15px black;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.camera-status{
+    background:green;
+    padding:8px 15px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:800;
+    font-size:17px;
+}
+
+.video-placeholder{
+    background:white;
+    height:400px;
+    border-radius:15px;
+    
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+
+    color:black;
+    font-size:24px;
+}
+
+/* PLAYBACK */
+
+.playback-section{
+    background:#1f2937;
+    padding:20px;
+    border-radius:15px;
+     box-shadow:0px 0px  15px black;
+}
+
+.recordings-grid{
+    margin-top:20px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.record-card{
+    background:#374151;
+    padding:15px;
+    border-radius:15px;
+     box-shadow:0px 0px  15px black;
+}
+
+.record-video{
+    height:180px;
+    background:white;
+    border-radius:10px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:black;
+    margin-bottom:15px;
+}
+
+.record-info{
+    margin-bottom:15px;
+}
+
+.play-btn{
+    width:100%;
+    padding:9px;
+    border:none;
+    border-radius:10px;
+    background:rgb(36, 36, 242);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:500;
+    box-shadow:0px 0px 5px black;
+    font-size:16px;
+}
+
+.play-btn:hover{
+    background:green;
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width:992px){
+
+    .recordings-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media screen and (max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main-content{
+        width:100%;
+        margin-left:0;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .recordings-grid{
+        grid-template-columns:1fr;
+    }
+
+    .video-placeholder{
+        height:250px;
+        font-size:18px;
+    }
+
+}
+
+
+@media screen and (max-width:500px){
+
+    .video-placeholder{
+        height:200px;
+        font-size:16px;
+    }
+
+    .record-video{
+        height:150px;
+    }
+
+}

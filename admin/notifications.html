@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+
+    <link rel="stylesheet" href="../css/notifications.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>Temple Monitor</h2>
+        </div>   
+
+           <ul>
+
+    <li>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="users.html">
+            <i class="fa-solid fa-users"></i>
+            Users
+        </a>
+    </li>
+
+    <li>
+        <a href="live-recording.html">
+            <i class="fa-solid fa-video"></i>
+            Live Recording
+        </a>
+    </li>
+
+    <li class="active">
+        <a href="notifications.html">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </a>
+    </li>
+
+    <li>
+        <a href="reports.html">
+            <i class="fa-solid fa-file"></i>
+            Reports
+        </a>
+    </li>
+
+    <li >
+        <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+    </li>
+
+    <li>
+        <a href="../login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+       
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <h1>Notifications</h1>
+
+            <div class="top-right">
+
+                <div class="clock" id="clock">
+                    00:00:00
+                </div>
+
+                <div class="bell">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ALERT STATUS -->
+        <div class="alert-status">
+
+            <div class="status-card active-alert">
+                ⚠️ Live Alert Monitoring Active
+            </div>
+
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="notifications-container">
+
+            <div class="notification-card">
+
+                <div class="notification-header">
+                    <h3>No Hairnet Detected</h3>
+                    <span>10:45 AM</span>
+                </div>
+
+                <p>Location: Kitchen Entry</p>
+
+                <div class="notification-actions">
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="clear-btn">
+                        Clear
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="notification-card">
+
+                <div class="notification-header">
+                    <h3>No Gloves Detected</h3>
+                    <span>11:15 AM</span>
+                </div>
+
+                <p>Location: Food Area</p>
+
+                <div class="notification-actions">
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="clear-btn">
+                        Clear
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="notification-card">
+
+                <div class="notification-header">
+                    <h3>No Apron Detected</h3>
+                    <span>12:05 PM</span>
+                </div>
+
+                <p>Location: Main Entry</p>
+
+                <div class="notification-actions">
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="clear-btn">
+                        Clear
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/notifications.js"></script>
+
+</body>
+</html>
