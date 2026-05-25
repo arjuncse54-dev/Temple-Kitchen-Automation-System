@@ -1,4 +1,6 @@
+// ==========================
 // LIVE CLOCK
+// ==========================
 
 function updateClock(){
 
@@ -22,16 +24,53 @@ setInterval(updateClock,1000);
 updateClock();
 
 
+
+// ==========================
+// POPUP SYSTEM
+// ==========================
+
+const popup =
+document.getElementById("popup");
+
+const popupText =
+document.getElementById("popupText");
+
+
+// SHOW POPUP
+
+function showPopup(message){
+
+    popupText.innerText = message;
+
+    popup.classList.add("show");
+
+    setTimeout(() => {
+
+        popup.classList.remove("show");
+
+    },3000);
+
+}
+
+
+
+// ==========================
 // PLAY BUTTONS
+// ==========================
 
 const playButtons =
 document.querySelectorAll(".play-btn");
+
+
+// BUTTON EVENTS
 
 playButtons.forEach(button => {
 
     button.addEventListener("click", function(){
 
-        alert("Opening Recording Playback...");
+        showPopup(
+            "Playback Recording Opened!"
+        );
 
     });
 
