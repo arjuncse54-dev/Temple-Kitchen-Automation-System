@@ -395,3 +395,35 @@ button:hover{
     }
 
 }
+
+
+/* WARNING CLEAR BUTTON */
+
+.warning-clear-btn{
+
+    margin-top:10px;
+
+    padding:8px 14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#ef4444;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-size:14px;
+
+}
+
+
+.warning-clear-btn:hover{
+
+    background:#dc2626;
+
+}

@@ -25,6 +25,28 @@ updateClock();
 
 
 
+
+// ==========================
+// GET SETTINGS
+// ==========================
+
+function getSettings(){
+
+    return JSON.parse(
+        localStorage.getItem("settings")
+    ) || {
+
+        notifications:true,
+        sound:true
+
+    };
+
+}
+
+
+
+
+
 // ==========================
 // POPUP SYSTEM
 // ==========================
@@ -81,8 +103,37 @@ document.getElementById(
 const bell =
 document.getElementById("bell");
 
+
+// ==========================
+// ENABLE AUDIO AFTER CLICK
+// ==========================
+
 const alertSound =
 document.getElementById("alertSound");
+
+document.addEventListener(
+"click",
+function(){
+
+    alertSound.play()
+    .then(() => {
+
+        alertSound.pause();
+
+        alertSound.currentTime = 0;
+
+    })
+    .catch(error => {
+
+        console.log(error);
+
+    });
+
+},
+{ once:true }
+);
+
+
 
 const stopBtn =
 document.getElementById("stopBtn");
@@ -189,7 +240,7 @@ function loadWarnings() {
 
     // LOAD WARNINGS
 
-    warnings.forEach(warning => {
+    warnings.forEach((warning,index) => {
 
         warningsContainer.innerHTML += `
 
@@ -203,6 +254,13 @@ function loadWarnings() {
                 ${warning.location}
                 - ${warning.time}
             </small>
+            <button
+class="warning-clear-btn"
+onclick="clearWarning(${index})">
+
+    Clear
+
+</button>
 
         </div>
 
@@ -217,22 +275,37 @@ function loadWarnings() {
 // ==========================
 // START ALERT
 // ==========================
+function startAlert(){
 
-function startAlert() {
+    const settings =
+    getSettings();
+
+
 
     // START BELL
-    bell.classList.add("ringing");
+
+    if(settings.notifications){
+
+        bell.classList.add("ringing");
+
+    }
+
+
 
     // PLAY SOUND
-    alertSound.currentTime = 0;
 
-    alertSound.play().catch(() => {
+    if(settings.sound){
 
-        console.log(
-            "Browser blocked autoplay"
-        );
+        alertSound.currentTime = 0;
 
-    });
+       alertSound.play()
+.catch(error => {
+
+    console.log(error);
+
+});
+
+    }
 
 }
 
@@ -263,13 +336,57 @@ stopBtn.addEventListener("click", function () {
 
 
 
+
 // ==========================
-// INITIAL LOAD
+// CLEAR WARNING
 // ==========================
 
-loadNotifications();
+function clearWarning(index){
 
-loadWarnings();
+    // GET WARNINGS
+
+    let warnings =
+    JSON.parse(
+        localStorage.getItem("warnings")
+    ) || [];
+
+
+
+    // REMOVE WARNING
+
+    warnings.splice(index,1);
+
+
+
+    // SAVE AGAIN
+
+    localStorage.setItem(
+        "warnings",
+        JSON.stringify(warnings)
+    );
+
+
+
+    // RELOAD WARNINGS
+
+    loadWarnings();
+
+
+
+    // UPDATE COUNTERS
+
+    updateCounters();
+
+
+
+    // POPUP
+
+    showPopup(
+        "Warning Cleared!",
+        "success"
+    );
+
+}
 // ==========================
 // DASHBOARD COUNTERS
 // ==========================
@@ -331,17 +448,26 @@ warnings.length;
 }
 
 
+// ==========================
 // INITIAL UPDATE
+// ==========================
+
+loadNotifications();
+
+loadWarnings();
 
 updateCounters();
 
 
 
 // ==========================
-// START ALERT IF DATA EXISTS
+// LAST NOTIFICATION COUNT
 // ==========================
 
-
+let lastNotificationCount =
+JSON.parse(
+    localStorage.getItem("notifications")
+)?.length || 0;
 
 
 
@@ -349,35 +475,41 @@ updateCounters();
 // WATCH FOR NEW VIOLATIONS
 // ==========================
 
-let lastNotificationCount =
-notifications.length;
-
-
-// CHECK EVERY SECOND
-
 setInterval(() => {
 
-    // GET UPDATED DATA
+    // GET LATEST NOTIFICATIONS
 
     const updatedNotifications =
     JSON.parse(
         localStorage.getItem("notifications")
     ) || [];
 
-    // NEW NOTIFICATION DETECTED
 
-    if (
+
+    // CHECK FOR NEW NOTIFICATION
+
+    if(
         updatedNotifications.length >
         lastNotificationCount
-    ) {
+    ){
 
-        // UPDATE DATA
+        console.log("Alert Triggered");
+
+
+
+        // UPDATE GLOBAL DATA
 
         notifications =
         updatedNotifications;
 
+
+
+        // UPDATE COUNT
+
         lastNotificationCount =
         updatedNotifications.length;
+
+
 
         // RELOAD UI
 
@@ -387,11 +519,15 @@ setInterval(() => {
 
         updateCounters();
 
-        // START ALERT
+
+
+        // START ALERT SOUND + BELL
 
         startAlert();
 
-        // POPUP
+
+
+        // SHOW POPUP
 
         showPopup(
             "New Violation Detected!",
@@ -400,7 +536,7 @@ setInterval(() => {
 
     }
 
-}, 1000);
+},1000);
 
 
 
@@ -408,8 +544,25 @@ setInterval(() => {
 // TEST SOUND
 // ==========================
 
-function testSound() {
+function testSound(){
 
-    startAlert();
+    const audio =
+    document.getElementById("alertSound");
+
+    audio.volume = 1;
+
+    audio.currentTime = 0;
+
+    audio.play()
+    .then(() => {
+
+        console.log("Sound Playing");
+
+    })
+    .catch(error => {
+
+        console.log(error);
+
+    });
 
 }

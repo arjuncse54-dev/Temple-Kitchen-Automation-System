@@ -23,28 +23,29 @@ setInterval(updateClock,1000);
 
 updateClock();
 
-
-
 // ==========================
-// INPUTS
+// ELEMENTS
 // ==========================
 
 const cameraUrl =
 document.getElementById("cameraUrl");
 
 const notificationToggle =
-document.getElementById("notificationToggle");
+document.getElementById(
+    "notificationToggle"
+);
 
 const soundToggle =
-document.getElementById("soundToggle");
+document.getElementById(
+    "soundToggle"
+);
 
 const saveBtn =
 document.querySelector(".save-btn");
 
 
-
 // ==========================
-// POPUP ELEMENTS
+// POPUP SYSTEM
 // ==========================
 
 const popup =
@@ -54,18 +55,11 @@ const popupText =
 document.getElementById("popupText");
 
 
-
-// ==========================
 // SHOW POPUP
-// ==========================
 
-function showPopup(message, type){
+function showPopup(message){
 
     popupText.innerText = message;
-
-    popup.classList.remove("success");
-
-    popup.classList.add(type);
 
     popup.classList.add("show");
 
@@ -73,63 +67,9 @@ function showPopup(message, type){
 
         popup.classList.remove("show");
 
-        popup.classList.remove("success");
-
     },3000);
 
 }
-
-
-
-// ==========================
-// LOAD SAVED SETTINGS
-// ==========================
-
-window.onload = function(){
-
-    const savedCamera =
-    localStorage.getItem("cameraUrl");
-
-    const savedNotification =
-    localStorage.getItem("notificationToggle");
-
-    const savedSound =
-    localStorage.getItem("soundToggle");
-
-    // CAMERA URL
-    if(savedCamera){
-
-        cameraUrl.value = savedCamera;
-
-    }
-
-    // NOTIFICATION
-    if(savedNotification === "true"){
-
-        notificationToggle.checked = true;
-
-    }
-    else{
-
-        notificationToggle.checked = false;
-
-    }
-
-    // SOUND
-    if(savedSound === "true"){
-
-        soundToggle.checked = true;
-
-    }
-    else{
-
-        soundToggle.checked = false;
-
-    }
-
-};
-
-
 
 // ==========================
 // SAVE SETTINGS
@@ -137,26 +77,68 @@ window.onload = function(){
 
 saveBtn.addEventListener("click", function(){
 
-    localStorage.setItem(
-        "cameraUrl",
-        cameraUrl.value
-    );
+    // CREATE SETTINGS OBJECT
 
-    localStorage.setItem(
-        "notificationToggle",
-        notificationToggle.checked
-    );
+    const settings = {
 
-    localStorage.setItem(
-        "soundToggle",
+        cameraUrl:
+        cameraUrl.value,
+
+        notifications:
+        notificationToggle.checked,
+
+        sound:
         soundToggle.checked
+
+    };
+
+
+
+    // SAVE SETTINGS
+
+    localStorage.setItem(
+        "settings",
+        JSON.stringify(settings)
     );
 
-    // SHOW POPUP
+
+
+    // POPUP
 
     showPopup(
-        "Settings Saved Successfully!",
-        "success"
+        "Settings Saved Successfully!"
     );
 
 });
+
+// ==========================
+// LOAD SETTINGS
+// ==========================
+
+window.onload = function(){
+
+    // GET SETTINGS
+
+    const savedSettings =
+    JSON.parse(
+        localStorage.getItem("settings")
+    );
+
+
+
+    // IF SETTINGS EXIST
+
+    if(savedSettings){
+
+        cameraUrl.value =
+        savedSettings.cameraUrl;
+
+        notificationToggle.checked =
+        savedSettings.notifications;
+
+        soundToggle.checked =
+        savedSettings.sound;
+
+    }
+
+}
