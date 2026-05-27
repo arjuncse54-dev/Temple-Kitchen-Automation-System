@@ -26,7 +26,7 @@ updateClock();
 
 
 // ==========================
-// LOAD NOTIFICATIONS
+// NOTIFICATION CONTAINER
 // ==========================
 
 const notificationsContainer =
@@ -35,7 +35,10 @@ document.getElementById(
 );
 
 
-// GET SAVED NOTIFICATIONS
+
+// ==========================
+// GET NOTIFICATIONS
+// ==========================
 
 let notifications =
 JSON.parse(
@@ -44,13 +47,22 @@ JSON.parse(
 
 
 
-// SHOW NOTIFICATIONS
+// ==========================
+// LOAD NOTIFICATIONS
+// ==========================
 
 function loadNotifications(){
 
+    // CLEAR OLD HTML
+
     notificationsContainer.innerHTML = "";
 
-    notifications.reverse().forEach(notification => {
+
+
+    // LOOP THROUGH DATA
+
+    notifications.forEach(
+    (notification,index) => {
 
         notificationsContainer.innerHTML += `
 
@@ -58,20 +70,29 @@ function loadNotifications(){
 
             <div class="notification-header">
 
-                <h3>${notification.title}</h3>
+                <h3>
+                    ${notification.title}
+                </h3>
 
-                <span>${notification.time}</span>
+                <span>
+                    ${notification.time}
+                </span>
 
             </div>
 
             <p>
-                Location: ${notification.location}
+                Location:
+                ${notification.location}
             </p>
 
             <div class="notification-actions">
 
-                <button class="view-btn">
-                    View
+                <button
+                class="clear-btn"
+                onclick="clearNotification(${index})">
+
+                    Clear
+
                 </button>
 
             </div>
@@ -85,6 +106,38 @@ function loadNotifications(){
 }
 
 
+
+// ==========================
+// CLEAR NOTIFICATION
+// ==========================
+
+function clearNotification(index){
+
+    // REMOVE ITEM
+
+    notifications.splice(index,1);
+
+
+
+    // UPDATE LOCAL STORAGE
+
+    localStorage.setItem(
+        "notifications",
+        JSON.stringify(notifications)
+    );
+
+
+
+    // RELOAD UI
+
+    loadNotifications();
+
+}
+
+
+
+// ==========================
 // INITIAL LOAD
+// ==========================
 
 loadNotifications();

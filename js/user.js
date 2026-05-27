@@ -107,6 +107,21 @@ JSON.parse(
 function loadNotifications() {
 
     notificationsContainer.innerHTML = "";
+    if(notifications.length === 0){
+
+    notificationsContainer.innerHTML = `
+
+    <div class="notify-box">
+
+        No Notifications Found
+
+    </div>
+
+    `;
+
+    return;
+
+}
 
     notifications.forEach(notification => {
 
@@ -127,9 +142,7 @@ function loadNotifications() {
 
 
 
-// ==========================
-// LOAD WARNINGS
-// ==========================
+
 
 
 
@@ -139,7 +152,11 @@ function loadNotifications() {
 
 function loadWarnings() {
 
+    // CLEAR OLD UI
+
     warningsContainer.innerHTML = "";
+
+
 
     // GET WARNINGS
 
@@ -147,6 +164,30 @@ function loadWarnings() {
     JSON.parse(
         localStorage.getItem("warnings")
     ) || [];
+
+
+
+    // EMPTY STATE
+
+    if(warnings.length === 0){
+
+        warningsContainer.innerHTML = `
+
+        <div class="warning-box">
+
+            No Warnings Found
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    // LOAD WARNINGS
 
     warnings.forEach(warning => {
 

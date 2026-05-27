@@ -62,136 +62,110 @@ function showPopup(message, type){
   
 
 }
+
+
 // INFORM BUTTONS
 
 const informButtons =
 document.querySelectorAll(".inform-btn");
 
+
 informButtons.forEach(button => {
 
     button.addEventListener("click", function(){
 
-        // CREATE NOTIFICATION OBJECT
+        // ==========================
+        // CREATE WARNING
+        // ==========================
 
-const notification = {
+        const warning = {
 
-    title: "No Hairnet Detected",
+            title: "No Hairnet",
 
-    location: "Kitchen Entry",
+            location: "Kitchen Entry",
 
-    time: new Date().toLocaleTimeString()
+            time: new Date().toLocaleTimeString()
 
-};
-
-
-// GET OLD NOTIFICATIONS
-
-let notifications =
-JSON.parse(
-    localStorage.getItem("notifications")
-) || [];
+        };
 
 
-// ADD NEW NOTIFICATION
+        // GET OLD WARNINGS
 
-notifications.push(notification);
-// ==========================
-// CREATE WARNING
-// ==========================
-
-const warning = {
-
-    title: "No Hairnet",
-
-    location: "Kitchen Entry",
-
-    time: new Date().toLocaleTimeString()
-
-};
+        let warnings =
+        JSON.parse(
+            localStorage.getItem("warnings")
+        ) || [];
 
 
-// GET OLD WARNINGS
+        // ADD WARNING
 
-let warnings =
-JSON.parse(
-    localStorage.getItem("warnings")
-) || [];
+        warnings.push(warning);
 
 
-// ADD WARNING
+        // SAVE WARNINGS
 
-warnings.push(warning);
-// ==========================
-// CREATE REPORT
-// ==========================
-
-const report = {
-
-    user: "Ravi Sharma",
-
-    violation: "No Hairnet",
-
-    location: "Kitchen Entry",
-
-    time: new Date().toLocaleTimeString(),
-
-    status: "Warning Sent"
-
-};
+        localStorage.setItem(
+            "warnings",
+            JSON.stringify(warnings)
+        );
 
 
-// GET OLD REPORTS
 
-let reports =
-JSON.parse(
-    localStorage.getItem("reports")
-) || [];
+        // ==========================
+        // CREATE REPORT
+        // ==========================
 
+        const report = {
 
-// ADD REPORT
+            user: "Ravi Sharma",
 
-reports.push(report);
+            violation: "No Hairnet",
 
+            location: "Kitchen Entry",
 
-// SAVE REPORTS
+            time: new Date().toLocaleTimeString(),
 
-localStorage.setItem(
-    "reports",
-    JSON.stringify(reports)
-);
+            status: "Warning Sent"
 
-
-// SAVE WARNINGS
-
-localStorage.setItem(
-    "warnings",
-    JSON.stringify(warnings)
-);
+        };
 
 
-// SAVE BACK
+        // GET OLD REPORTS
 
-localStorage.setItem(
-    "notifications",
-    JSON.stringify(notifications)
-);
+        let reports =
+        JSON.parse(
+            localStorage.getItem("reports")
+        ) || [];
 
 
-// SHOW POPUP
+        // ADD REPORT
 
-showPopup(
-    "Notification Sent Successfully!",
-    "success"
-);
+        reports.push(report);
 
-    
+
+        // SAVE REPORTS
+
+        localStorage.setItem(
+            "reports",
+            JSON.stringify(reports)
+        );
+
+
+
+        // ==========================
+        // SHOW POPUP
+        // ==========================
+
+        showPopup(
+            "Warning Sent Successfully!",
+            "success"
+        );
 
     });
 
 });
 
-
-// SEARCH FUNCTION
+// SEARCH FUNCTION 
 
 const searchInput =
 document.getElementById("searchInput");
