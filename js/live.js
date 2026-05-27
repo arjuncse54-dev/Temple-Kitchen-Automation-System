@@ -75,3 +75,123 @@ playButtons.forEach(button => {
     });
 
 });
+
+// ==========================
+// DETECTION BUTTONS
+// ==========================
+
+const detectButtons =
+document.querySelectorAll(".detect-btn");
+
+
+
+// BUTTON EVENTS
+
+detectButtons.forEach(button => {
+
+    button.addEventListener("click", function(){
+
+        // DETECTION TYPE
+
+        let title = "";
+
+        let location = "";
+
+
+
+        // HAIRNET
+
+        if(button.classList.contains(
+            "hairnet-btn"
+        )){
+
+            title =
+            "No Hairnet Detected";
+
+            location =
+            "Kitchen Entry";
+
+        }
+
+
+
+        // GLOVES
+
+        else if(button.classList.contains(
+            "gloves-btn"
+        )){
+
+            title =
+            "No Gloves Detected";
+
+            location =
+            "Food Area";
+
+        }
+
+
+
+        // APRON
+
+        else{
+
+            title =
+            "No Apron Detected";
+
+            location =
+            "Main Entry";
+
+        }
+
+
+
+        // CREATE NOTIFICATION
+
+        const notification = {
+
+            title:title,
+
+            location:location,
+
+            time:new Date()
+            .toLocaleTimeString()
+
+        };
+
+
+
+        // GET OLD NOTIFICATIONS
+
+        let notifications =
+        JSON.parse(
+            localStorage.getItem(
+                "notifications"
+            )
+        ) || [];
+
+
+
+        // ADD NEW NOTIFICATION
+
+        notifications.push(notification);
+
+
+
+        // SAVE AGAIN
+
+        localStorage.setItem(
+            "notifications",
+            JSON.stringify(notifications)
+        );
+
+
+
+        // POPUP
+
+        showPopup(
+            "AI Detection Triggered!"
+        );
+
+    });
+
+});

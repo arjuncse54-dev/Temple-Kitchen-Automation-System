@@ -472,71 +472,48 @@ JSON.parse(
 
 
 // ==========================
-// WATCH FOR NEW VIOLATIONS
+// REAL-TIME STORAGE WATCHER
 // ==========================
 
-setInterval(() => {
+window.addEventListener(
+"storage",
+function(){
 
-    // GET LATEST NOTIFICATIONS
+    // RELOAD NOTIFICATIONS
 
-    const updatedNotifications =
+    notifications =
     JSON.parse(
-        localStorage.getItem("notifications")
+        localStorage.getItem(
+            "notifications"
+        )
     ) || [];
 
 
 
-    // CHECK FOR NEW NOTIFICATION
+    // RELOAD UI
 
-    if(
-        updatedNotifications.length >
-        lastNotificationCount
-    ){
+    loadNotifications();
 
-        console.log("Alert Triggered");
+    loadWarnings();
 
-
-
-        // UPDATE GLOBAL DATA
-
-        notifications =
-        updatedNotifications;
+    updateCounters();
 
 
 
-        // UPDATE COUNT
+    // START ALERT
 
-        lastNotificationCount =
-        updatedNotifications.length;
-
-
-
-        // RELOAD UI
-
-        loadNotifications();
-
-        loadWarnings();
-
-        updateCounters();
+    startAlert();
 
 
 
-        // START ALERT SOUND + BELL
+    // POPUP
 
-        startAlert();
+    showPopup(
+        "New Violation Detected!",
+        "warning"
+    );
 
-
-
-        // SHOW POPUP
-
-        showPopup(
-            "New Violation Detected!",
-            "warning"
-        );
-
-    }
-
-},1000);
+});
 
 
 

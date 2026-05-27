@@ -23,6 +23,39 @@ setInterval(updateClock,1000);
 
 updateClock();
 
+// ==========================
+// POPUP SYSTEM
+// ==========================
+
+const popup =
+document.getElementById("popup");
+
+const popupText =
+document.getElementById("popupText");
+
+
+// SHOW POPUP
+
+function showPopup(message,type){
+
+    popupText.innerText = message;
+
+    popup.classList.remove("success");
+    popup.classList.remove("warning");
+    popup.classList.remove("error");
+
+    popup.classList.add(type);
+
+    popup.classList.add("show");
+
+    setTimeout(() => {
+
+        popup.classList.remove("show");
+
+    },3000);
+
+}
+
 
 
 // ==========================
@@ -56,6 +89,23 @@ function loadNotifications(){
     // CLEAR OLD HTML
 
     notificationsContainer.innerHTML = "";
+    if(notifications.length === 0){
+
+    notificationsContainer.innerHTML = `
+
+    <div class="notification-card">
+
+        <p>
+            No Notifications Found
+        </p>
+
+    </div>
+
+    `;
+
+    return;
+
+}
 
 
 
@@ -113,13 +163,13 @@ function loadNotifications(){
 
 function clearNotification(index){
 
-    // REMOVE ITEM
+    // REMOVE NOTIFICATION
 
     notifications.splice(index,1);
 
 
 
-    // UPDATE LOCAL STORAGE
+    // UPDATE STORAGE
 
     localStorage.setItem(
         "notifications",
@@ -128,9 +178,35 @@ function clearNotification(index){
 
 
 
+    // STOP BELL IF EMPTY
+
+    if(notifications.length === 0){
+
+        const bell =
+        document.querySelector(".bell");
+
+        if(bell){
+
+            bell.classList.remove("ringing");
+
+        }
+
+    }
+
+
+
     // RELOAD UI
 
     loadNotifications();
+
+
+
+    // POPUP
+
+    showPopup(
+        "Notification Cleared!",
+        "success"
+    );
 
 }
 
