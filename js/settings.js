@@ -23,6 +23,8 @@ setInterval(updateClock,1000);
 
 updateClock();
 
+
+
 // ==========================
 // ELEMENTS
 // ==========================
@@ -44,6 +46,23 @@ const saveBtn =
 document.querySelector(".save-btn");
 
 
+
+// ==========================
+// STATUS ELEMENTS
+// ==========================
+
+const notificationStatus =
+document.getElementById(
+    "notificationStatus"
+);
+
+const alertStatus =
+document.getElementById(
+    "alertStatus"
+);
+
+
+
 // ==========================
 // POPUP SYSTEM
 // ==========================
@@ -53,6 +72,7 @@ document.getElementById("popup");
 
 const popupText =
 document.getElementById("popupText");
+
 
 
 // SHOW POPUP
@@ -70,6 +90,8 @@ function showPopup(message){
     },3000);
 
 }
+
+
 
 // ==========================
 // SAVE SETTINGS
@@ -103,6 +125,12 @@ saveBtn.addEventListener("click", function(){
 
 
 
+    // UPDATE STATUS
+
+    updateSystemStatus();
+
+
+
     // POPUP
 
     showPopup(
@@ -110,6 +138,8 @@ saveBtn.addEventListener("click", function(){
     );
 
 });
+
+
 
 // ==========================
 // LOAD SETTINGS
@@ -141,4 +171,116 @@ window.onload = function(){
 
     }
 
+
+
+    // UPDATE STATUS
+
+    updateSystemStatus();
+
+};
+
+
+
+// ==========================
+// UPDATE SYSTEM STATUS
+// ==========================
+
+function updateSystemStatus(){
+
+    // GET SETTINGS
+
+    const settings =
+    JSON.parse(
+        localStorage.getItem("settings")
+    ) || {};
+
+
+
+    // GET NOTIFICATIONS
+
+    const notifications =
+    JSON.parse(
+        localStorage.getItem(
+            "notifications"
+        )
+    ) || [];
+
+
+
+    // ==========================
+    // NOTIFICATION STATUS
+    // ==========================
+
+    if(settings.notifications){
+
+        notificationStatus.innerHTML =
+        "● Notifications Active";
+
+
+
+        notificationStatus.classList.add(
+            "active-status"
+        );
+
+    }
+
+    else{
+
+        notificationStatus.innerHTML =
+        "● Notifications Disabled";
+
+
+
+        notificationStatus.classList.remove(
+            "active-status"
+        );
+
+    }
+
+
+
+    // ==========================
+    // ALERT STATUS
+    // ==========================
+
+    if(notifications.length > 0){
+
+        alertStatus.innerHTML =
+        "● Alert Active";
+
+
+
+        alertStatus.classList.add(
+            "active-status"
+        );
+
+    }
+
+    else{
+
+        alertStatus.innerHTML =
+        "● No Active Alerts";
+
+
+
+        alertStatus.classList.remove(
+            "active-status"
+        );
+
+    }
+
 }
+
+
+
+// ==========================
+// REAL-TIME STATUS UPDATE
+// ==========================
+
+window.addEventListener(
+"storage",
+function(){
+
+    updateSystemStatus();
+
+});

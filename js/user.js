@@ -458,16 +458,8 @@ loadWarnings();
 
 updateCounters();
 
+updateAnalytics();
 
-
-// ==========================
-// LAST NOTIFICATION COUNT
-// ==========================
-
-let lastNotificationCount =
-JSON.parse(
-    localStorage.getItem("notifications")
-)?.length || 0;
 
 
 
@@ -477,41 +469,49 @@ JSON.parse(
 
 window.addEventListener(
 "storage",
-function(){
+function(event){
 
-    // RELOAD NOTIFICATIONS
+    // ONLY FOR NOTIFICATIONS
 
-    notifications =
-    JSON.parse(
-        localStorage.getItem(
-            "notifications"
-        )
-    ) || [];
+    if(event.key === "notifications"){
 
+        // RELOAD NOTIFICATIONS
 
-
-    // RELOAD UI
-
-    loadNotifications();
-
-    loadWarnings();
-
-    updateCounters();
+        notifications =
+        JSON.parse(
+            localStorage.getItem(
+                "notifications"
+            )
+        ) || [];
 
 
 
-    // START ALERT
+        // RELOAD UI
 
-    startAlert();
+        loadNotifications();
+
+        loadWarnings();
+
+        updateCounters();
+
+        updateAnalytics();
 
 
 
-    // POPUP
+        // START ALERT
 
-    showPopup(
-        "New Violation Detected!",
-        "warning"
-    );
+        startAlert();
+
+
+
+        // POPUP
+
+        showPopup(
+            "New Violation Detected!",
+            "warning"
+        );
+
+    }
 
 });
 
@@ -541,5 +541,129 @@ function testSound(){
         console.log(error);
 
     });
+
+}
+
+// ==========================
+// VIOLATION ANALYTICS
+// ==========================
+
+function updateAnalytics(){
+
+    // GET NOTIFICATIONS
+
+    const notifications =
+    JSON.parse(
+        localStorage.getItem(
+            "notifications"
+        )
+    ) || [];
+
+
+
+    // COUNTERS
+
+    let hairnet = 0;
+
+    let gloves = 0;
+
+    let apron = 0;
+
+
+
+    // LOOP THROUGH DATA
+
+    notifications.forEach(notification => {
+
+        // HAIRNET
+
+        if(
+            notification.title.includes(
+                "Hairnet"
+            )
+        ){
+
+            hairnet++;
+
+        }
+
+
+
+        // GLOVES
+
+        else if(
+            notification.title.includes(
+                "Gloves"
+            )
+        ){
+
+            gloves++;
+
+        }
+
+
+
+        // APRON
+
+        else if(
+            notification.title.includes(
+                "Apron"
+            )
+        ){
+
+            apron++;
+
+        }
+
+    });
+
+
+
+    // UPDATE UI
+
+   const hairnetCount =
+document.getElementById(
+    "hairnetCount"
+);
+
+if(hairnetCount){
+
+    hairnetCount.innerText =
+    hairnet;
+
+}
+
+
+
+
+
+const glovesCount =
+document.getElementById(
+    "glovesCount"
+);
+
+if(glovesCount){
+
+    glovesCount.innerText =
+    gloves;
+
+}
+
+
+
+const apronCount =
+document.getElementById(
+    "apronCount"
+);
+
+if(apronCount){
+
+    apronCount.innerText =
+    apron;
+
+}
+
+
+
 
 }
