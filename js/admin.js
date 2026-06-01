@@ -25,4 +25,133 @@ function updateClock(){
 setInterval(updateClock, 1000);
 
 // INITIAL CALL
-updateClock();
+updateClock();   
+
+
+// ==========================
+// DASHBOARD STATS
+// ==========================
+
+function loadDashboardStats(){
+
+    fetch(
+        "http://127.0.0.1:5000/dashboard-stats"
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById(
+            "totalViolations"
+        ).innerHTML =
+        data.total_violations;
+
+        document.getElementById(
+            "todayViolations"
+        ).innerHTML =
+        data.today_violations;
+
+        document.getElementById(
+            "activeCameras"
+        ).innerHTML =
+        data.active_cameras;
+
+        document.getElementById(
+            "alertStatus"
+        ).innerHTML =
+        data.alert_status;
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+    });
+
+}
+
+
+// LOAD DASHBOARD DATA
+
+loadDashboardStats();  
+
+
+// ==========================
+// RECENT ALERTS
+// ==========================
+
+function loadRecentAlerts(){
+
+    fetch(
+        "http://127.0.0.1:5000/notifications"
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const container =
+        document.getElementById(
+            "recentAlertsContainer"
+        );
+
+        container.innerHTML = "";
+
+        if(data.length === 0){
+
+            container.innerHTML = `
+
+            <div class="alert-box">
+
+                No Recent Alerts
+
+            </div>
+
+            `;
+
+            return;
+
+        }
+
+        data.slice(-5).reverse().forEach(
+
+            alert => {
+
+                container.innerHTML += `
+
+                <div class="alert-box">
+
+                    ⚠️ ${alert.title}
+                    -
+                    ${alert.location}
+
+                </div>
+
+                `;
+
+            }
+
+        );
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Recent Alerts Error:",
+            error
+        );
+
+    });
+
+}
+
+
+// LOAD ALERTS
+
+loadRecentAlerts();

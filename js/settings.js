@@ -97,47 +97,57 @@ function showPopup(message){
 // SAVE SETTINGS
 // ==========================
 
+
 saveBtn.addEventListener("click", function(){
 
-    // CREATE SETTINGS OBJECT
+    fetch(
 
-    const settings = {
+        "http://127.0.0.1:5000/settings",
 
-        cameraUrl:
-        cameraUrl.value,
+        {
 
-        notifications:
-        notificationToggle.checked,
+            method: "POST",
 
-        sound:
-        soundToggle.checked
+            headers: {
 
-    };
+                "Content-Type":
+                "application/json"
 
+            },
 
+            body: JSON.stringify({
 
-    // SAVE SETTINGS
+                cameraUrl:
+                cameraUrl.value,
 
-    localStorage.setItem(
-        "settings",
-        JSON.stringify(settings)
-    );
+                notifications:
+                notificationToggle.checked,
 
+                sound:
+                soundToggle.checked
 
+            })
 
-    // UPDATE STATUS
+        }
 
-    updateSystemStatus();
+    )
 
+    .then(response => response.json())
 
+    .then(data => {
 
-    // POPUP
+        updateSystemStatus();
 
-    showPopup(
-        "Settings Saved Successfully!"
-    );
+        showPopup(
+
+            "Settings Saved Successfully!"
+
+        );
+
+    });
 
 });
+
 
 
 
@@ -145,42 +155,33 @@ saveBtn.addEventListener("click", function(){
 // LOAD SETTINGS
 // ==========================
 
+
 window.onload = function(){
 
-    // GET SETTINGS
+    fetch(
 
-    const savedSettings =
-    JSON.parse(
-        localStorage.getItem("settings")
-    );
+        "http://127.0.0.1:5000/settings"
 
+    )
 
+    .then(response => response.json())
 
-    // IF SETTINGS EXIST
-
-    if(savedSettings){
+    .then(data => {
 
         cameraUrl.value =
-        savedSettings.cameraUrl;
+        data.cameraUrl;
 
         notificationToggle.checked =
-        savedSettings.notifications;
+        data.notifications;
 
         soundToggle.checked =
-        savedSettings.sound;
+        data.sound;
 
-    }
+        updateSystemStatus();
 
+    });
 
-
-    // UPDATE STATUS
-
-    updateSystemStatus();
-
-};
-
-
-
+}
 // ==========================
 // UPDATE SYSTEM STATUS
 // ==========================

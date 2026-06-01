@@ -78,7 +78,21 @@ informButtons.forEach(button => {
         // CREATE WARNING
         // ==========================
 
-        const warning = {
+     fetch(
+
+    "http://127.0.0.1:5000/notifications",
+
+    {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
 
             title: "No Hairnet",
 
@@ -86,28 +100,33 @@ informButtons.forEach(button => {
 
             time: new Date().toLocaleTimeString()
 
-        };
+        })
+
+    }
+
+)
+
+.then(response => response.json())
+
+.then(data => {
+
+    showPopup(
+
+        "Warning Sent Successfully!",
+
+        "success"
+
+    );
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+});
 
 
-        // GET OLD WARNINGS
-
-        let warnings =
-        JSON.parse(
-            localStorage.getItem("warnings")
-        ) || [];
-
-
-        // ADD WARNING
-
-        warnings.push(warning);
-
-
-        // SAVE WARNINGS
-
-        localStorage.setItem(
-            "warnings",
-            JSON.stringify(warnings)
-        );
 
 
 

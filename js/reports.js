@@ -44,10 +44,11 @@ document.getElementById(
 // GET REPORTS
 // ==========================
 
-let reports =
-JSON.parse(
-    localStorage.getItem("reports")
-) || [];
+// ==========================
+// REPORTS ARRAY
+// ==========================
+
+let reports = [];
 
 
 
@@ -57,57 +58,77 @@ JSON.parse(
 
 function loadReports(){
 
-    reportTable.innerHTML = "";
-    if(reports.length === 0){
+    fetch("http://127.0.0.1:5000/reports")
 
-    reportTable.innerHTML = `
+    .then(response => response.json())
 
-    <tr>
+    .then(data => {
 
-        <td colspan="5">
+        reports = data;
 
-            No Reports Available
+        reportTable.innerHTML = "";
 
-        </td>
+        if(reports.length === 0){
 
-    </tr>
+            reportTable.innerHTML = `
 
-    `;
+            <tr>
 
-    return;
+                <td colspan="6">
 
-}
+                    No Reports Available
 
-    reports.forEach((report,index) => {
+                </td>
 
-        reportTable.innerHTML += `
+            </tr>
 
-        <tr>
+            `;
 
-            <td>${report.user}</td>
+            return;
 
-            <td>${report.violation}</td>
+        }
 
-            <td>${report.location}</td>
+        reports.forEach((report,index) => {
 
-            <td>${report.time}</td>
+            reportTable.innerHTML += `
 
-            <td>${report.status}</td>
-            <td>
+            <tr>
 
-    <button
-    class="delete-btn"
-    onclick="deleteReport(${index})">
+                <td>${report.user}</td>
 
-        Delete
+                <td>${report.violation}</td>
 
-    </button>
+                <td>${report.location}</td>
 
-</td>
+                <td>${report.time}</td>
 
-        </tr>
+                <td>${report.status}</td>
 
-        `;
+                <td>
+<button
+class="delete-btn"
+onclick="viewReport(${index})">
+
+    View
+
+</button>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Error loading reports:",
+            error
+        );
 
     });
 
@@ -122,97 +143,111 @@ loadReports();
 // ==========================
 // SEARCH REPORTS
 // ==========================
+ 
 
 searchInput.addEventListener(
-"keyup",
-function(){
 
-    // GET INPUT VALUE
+    "keyup",
 
-    const value =
-    this.value.toLowerCase();
+    function(){
+
+        const value =
+        this.value.toLowerCase();
+
+        reportTable.innerHTML = "";
+
+        const filteredReports =
+
+        reports.filter(report =>
+
+            report.violation
+            .toLowerCase()
+            .includes(value)
+
+            ||
+
+            report.location
+            .toLowerCase()
+            .includes(value)
+
+            ||
+
+            report.status
+            .toLowerCase()
+            .includes(value)
+
+        );
 
 
 
-    // FILTER REPORTS
+        if(filteredReports.length === 0){
 
-    const filteredReports =
-    reports.filter(report => {
+            reportTable.innerHTML = `
 
-        return report.user
-        .toLowerCase()
-        .includes(value);
+            <tr>
 
-    });
+                <td colspan="6">
+
+                    No Reports Found
+
+                </td>
+
+            </tr>
+
+            `;
+
+            return;
+
+        }
 
 
 
-    // CLEAR TABLE
+        filteredReports.forEach(
 
-    reportTable.innerHTML = "";
+            (report,index) => {
 
+                reportTable.innerHTML += `
 
+                <tr>
 
-    // EMPTY STATE
+                    <td>${report.user}</td>
 
-    if(filteredReports.length === 0){
+                    <td>${report.violation}</td>
 
-        reportTable.innerHTML = `
+                    <td>${report.location}</td>
 
-        <tr>
+                    <td>${report.time}</td>
 
-            <td colspan="5">
+                    <td>${report.status}</td>
 
-                No Reports Found
+                    <td>
 
-            </td>
+                        <button
+                        class="delete-btn"
+                        onclick="viewReport(${index})">
 
-        </tr>
+                            View
 
-        `;
+                        </button>
 
-        return;
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+
+        );
 
     }
 
+);
 
 
-    // LOAD FILTERED REPORTS
 
-    filteredReports.forEach(report => {
 
-        reportTable.innerHTML += `
 
-        <tr>
-
-            <td>${report.user}</td>
-
-            <td>${report.violation}</td>
-
-            <td>${report.location}</td>
-
-            <td>${report.time}</td>
-
-            <td>${report.status}</td>
-            <td>
-
-    <button
-    class="delete-btn"
-    onclick="deleteReport(${index})">
-
-        Delete
-
-    </button>
-
-</td>
-
-        </tr>
-
-        `;
-
-    });
-
-});
 // ==========================
 // DELETE REPORT
 // ==========================
@@ -237,5 +272,26 @@ function deleteReport(index){
     // RELOAD TABLE
 
     loadReports();
+
+}
+
+
+function viewReport(index){
+
+    const report = reports[index];
+
+    alert(
+
+        "User: " + report.user + "\n\n" +
+
+        "Violation: " + report.violation + "\n\n" +
+
+        "Location: " + report.location + "\n\n" +
+
+        "Time: " + report.time + "\n\n" +
+
+        "Status: " + report.status
+
+    );
 
 }
