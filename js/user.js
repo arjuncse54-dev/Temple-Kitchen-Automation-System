@@ -43,6 +43,15 @@ function getSettings(){
 
 }
 
+// ==========================
+// LOADING OVERLAY
+// ==========================
+
+const loadingOverlay =
+document.getElementById(
+    "loadingOverlay"
+);
+
 
 
 
@@ -145,9 +154,7 @@ document.getElementById("stopBtn");
 // ==========================
 
 let notifications =
-JSON.parse(
-    localStorage.getItem("notifications")
-) || [];
+getNotifications();
 
 
 
@@ -210,11 +217,8 @@ function loadWarnings() {
 
 
     // GET WARNINGS
-
-    const warnings =
-    JSON.parse(
-        localStorage.getItem("warnings")
-    ) || [];
+const warnings =
+getWarnings();
 
 
 
@@ -346,10 +350,7 @@ function clearWarning(index){
     // GET WARNINGS
 
     let warnings =
-    JSON.parse(
-        localStorage.getItem("warnings")
-    ) || [];
-
+getWarnings();
 
 
     // REMOVE WARNING
@@ -360,10 +361,7 @@ function clearWarning(index){
 
     // SAVE AGAIN
 
-    localStorage.setItem(
-        "warnings",
-        JSON.stringify(warnings)
-    );
+saveWarnings(warnings);
 
 
 
@@ -415,9 +413,7 @@ function updateCounters(){
     // GET WARNINGS
 
 const warnings =
-JSON.parse(
-    localStorage.getItem("warnings")
-) || [];
+getWarnings();
 
 // TOTAL WARNINGS
 
@@ -460,6 +456,11 @@ updateCounters();
 
 updateAnalytics();
 
+updateSystemHealth();
+
+loadRecentActivity();
+
+
 
 
 
@@ -471,45 +472,65 @@ window.addEventListener(
 "storage",
 function(event){
 
-    // ONLY FOR NOTIFICATIONS
+    // ==========================
+    // NOTIFICATIONS UPDATED
+    // ==========================
 
     if(event.key === "notifications"){
 
-        // RELOAD NOTIFICATIONS
-
         notifications =
-        JSON.parse(
-            localStorage.getItem(
-                "notifications"
-            )
-        ) || [];
+        getNotifications();
 
 
-
-        // RELOAD UI
 
         loadNotifications();
-
-        loadWarnings();
 
         updateCounters();
 
         updateAnalytics();
 
+        updateSystemHealth();
+
+        loadRecentActivity();
 
 
-        // START ALERT
 
         startAlert();
 
 
 
-        // POPUP
-
         showPopup(
             "New Violation Detected!",
             "warning"
         );
+
+    }
+
+
+
+    // ==========================
+    // WARNINGS UPDATED
+    // ==========================
+
+    if(event.key === "warnings"){
+
+        loadWarnings();
+
+        updateCounters();
+
+        updateSystemHealth();
+
+    }
+
+
+
+    // ==========================
+    // SETTINGS UPDATED
+    // ==========================
+
+    if(event.key === "settings"){
+
+        updateSystemHealth();
 
     }
 
@@ -553,11 +574,7 @@ function updateAnalytics(){
     // GET NOTIFICATIONS
 
     const notifications =
-    JSON.parse(
-        localStorage.getItem(
-            "notifications"
-        )
-    ) || [];
+  getNotifications();
 
 
 
@@ -667,3 +684,174 @@ if(apronCount){
 
 
 }
+
+// ==========================
+// SYSTEM HEALTH
+// ==========================
+
+function updateSystemHealth(){
+
+    // GET SETTINGS
+
+    const settings =
+    getSettings();
+
+
+
+    // GET WARNINGS
+
+  const warnings =
+getWarnings();
+
+
+
+    // AI STATUS
+
+    document.getElementById(
+        "aiStatus"
+    ).innerText = "Active";
+
+
+
+    // NOTIFICATION STATUS
+
+    document.getElementById(
+        "notificationHealth"
+    ).innerText =
+
+    settings.notifications
+    ? "Active"
+    : "Disabled";
+
+
+
+    // WARNING COUNT
+
+    document.getElementById(
+        "warningHealth"
+    ).innerText =
+    warnings.length;
+
+
+
+    // ALERT STATUS
+
+    document.getElementById(
+        "alertHealth"
+    ).innerText =
+
+    notifications.length > 0
+    ? "Alert Active"
+    : "Normal";
+
+}
+
+// ==========================
+// RECENT ACTIVITY
+// ==========================
+
+function loadRecentActivity(){
+
+    // GET CONTAINER
+
+    const activityContainer =
+    document.getElementById(
+        "activityContainer"
+    );
+
+
+
+    // SAFETY CHECK
+
+    if(!activityContainer){
+
+        return;
+
+    }
+
+
+
+    // GET NOTIFICATIONS
+
+    const notifications =
+ getNotifications();
+
+
+
+    // CLEAR OLD DATA
+
+    activityContainer.innerHTML =
+    "";
+
+
+
+    // EMPTY STATE
+
+    if(notifications.length === 0){
+
+        activityContainer.innerHTML = `
+
+        <div class="activity-card">
+
+            <p>
+                No Recent Activity
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    // SHOW LATEST FIRST
+
+    notifications
+    .slice()
+    .reverse()
+    .forEach(notification => {
+
+        activityContainer.innerHTML += `
+
+        <div class="activity-card">
+
+            <p>
+
+                ⚠️
+                ${notification.title}
+
+            </p>
+
+            <span>
+
+                ${notification.time}
+
+            </span>
+
+        </div>
+
+        `;
+
+    });
+
+}
+// ==========================
+// HIDE LOADER
+// ==========================
+
+window.addEventListener(
+"load",
+function(){
+
+    setTimeout(() => {
+
+        loadingOverlay.classList.add(
+            "hide"
+        );
+
+    },1000);
+
+});

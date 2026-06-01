@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Test</title>
+</head>
+<body>
+
+<button onclick="deleteNotification()">
+    Delete Notification 1
+</button>
+
+<script>
+
+function deleteNotification(){
+
+    fetch(
+        "http://127.0.0.1:5000/notifications/1",
+        {
+            method: "DELETE"
+        }
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        console.log(data);
+
+        alert("Delete Request Sent");
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

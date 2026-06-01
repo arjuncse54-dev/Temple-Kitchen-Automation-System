@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>POST Test</title>
+</head>
+<body>
+
+<button onclick="addNotification()">
+    Add Notification
+</button>
+
+<script>
+
+function addNotification(){
+
+    fetch(
+        "http://127.0.0.1:5000/notifications",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                title: "No Apron",
+
+                location: "Main Entry",
+
+                time: "07:15 PM"
+
+            })
+
+        }
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        alert("Notification Added");
+
+        console.log(data);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -82,9 +82,65 @@
         <!-- STATISTICS -->
         <div class="cards">
 
-            <!-- VIOLATION ANALYTICS -->
+            
+            <div class="card">
+                <h3>Total Alerts</h3>
+                <p id="totalAlerts">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Warnings</h3>
+                <p id="totalWarnings">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Alert Status</h3>
+                <p id="alertStatus">Inactive</p>
+            </div>
+
+            <div class="card">
+                <h3>Today Alerts</h3>
+                <p id="todayAlerts">0</p>
+            </div>
+
+            </div>
+        
+                    <!-- CONTENT AREA -->
+        <div class="content-area">
+
+            <!-- NOTIFICATIONS -->
+            <div class="notifications">
+
+                <h2>Notifications</h2>
+
+               <div id="notificationsContainer">
+
+</div>
+
+            </div>
+
+            <!-- WARNINGS -->
+            <div class="warnings">
+
+                <h2>Personal Warnings    <button id="stopBtn">
+                    Stop Alert Ring
+                </button></h2>
+
+                <div id="warningsContainer">
+
+</div>
+            </div>
+ </div>
+
+
+     <!-- VIOLATION ANALYTICS -->
+             
 
 <div class="analytics-section">
+
+    <div class="system-health">
+        <h2> Violation Analytics</h2>
+         <div class="health-grid">
 
     <div class="analytics-card">
 
@@ -109,67 +165,78 @@
         <p id="apronCount">0</p>
 
     </div>
-
-</div>
-
-            <div class="card">
-                <h3>Total Alerts</h3>
-                <p id="totalAlerts">0</p>
-            </div>
-
-            <div class="card">
-                <h3>Total Warnings</h3>
-                <p id="totalWarnings">0</p>
-            </div>
-
-            <div class="card">
-                <h3>Alert Status</h3>
-                <p id="alertStatus">Inactive</p>
-            </div>
-
-            <div class="card">
-                <h3>Today Alerts</h3>
-                <p id="todayAlerts">0</p>
-            </div>
-
-        </div>
-
-        <!-- CONTENT AREA -->
-        <div class="content-area">
-
-            <!-- NOTIFICATIONS -->
-            <div class="notifications">
-
-                <h2>Notifications</h2>
-
-               <div id="notificationsContainer">
-
-</div>
-
-            </div>
-
-            <!-- WARNINGS -->
-            <div class="warnings">
-
-                <h2>Personal Warnings    <button id="stopBtn">
-                    Stop Alert Ring
-                </button></h2>
-
-                <div id="warningsContainer">
-
-</div>
-
-              
-                
-
-            </div>
-
-        </div>
-
-        <!-- PROFILE SECTION -->
-       
+         </div>
 
     </div>
+    <!-- SYSTEM HEALTH -->
+
+<div class="system-health">
+
+    <h2>System Health</h2>
+
+    <div class="health-grid">
+
+        <div class="health-card">
+
+            <h3>AI Detection</h3>
+
+            <p id="aiStatus">
+                Active
+            </p>
+
+        </div>
+
+        <div class="health-card">
+
+            <h3>Notifications</h3>
+
+            <p id="notificationHealth">
+                Active
+            </p>
+
+        </div>
+
+        <div class="health-card">
+
+            <h3>Total Warnings</h3>
+
+            <p id="warningHealth">
+                0
+            </p>
+
+        </div>
+
+        <div class="health-card">
+
+            <h3>System Alerts</h3>
+
+            <p id="alertHealth">
+                Normal
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- RECENT ACTIVITY -->
+
+<div class="activity-section">
+
+    <h2>Recent Activity</h2>
+
+    <div
+    class="activity-container"
+    id="activityContainer">
+
+    </div>
+
+</div>
+
+
+</div>
+       
+
     <!-- CUSTOM POPUP -->
 
 <div class="custom-popup" id="popup">
@@ -188,6 +255,19 @@
     type="audio/mpeg">
 
 </audio>
+<!-- LOADING OVERLAY -->
+
+<div class="loading-overlay"
+id="loadingOverlay">
+
+    <div class="loader"></div>
+
+    <p>
+        Loading System...
+    </p>
+
+</div>
+<script src="../js/storage.js"></script>
 
     <!-- JS -->
     <script src="../js/user.js"></script>

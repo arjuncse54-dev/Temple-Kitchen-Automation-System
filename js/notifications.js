@@ -73,10 +73,7 @@ document.getElementById(
 // GET NOTIFICATIONS
 // ==========================
 
-let notifications =
-JSON.parse(
-    localStorage.getItem("notifications")
-) || [];
+let notifications = [];
 
 
 
@@ -86,70 +83,98 @@ JSON.parse(
 
 function loadNotifications(){
 
-    // CLEAR OLD HTML
+    fetch("http://127.0.0.1:5000/notifications")
 
-    notificationsContainer.innerHTML = "";
-    if(notifications.length === 0){
-
-    notificationsContainer.innerHTML = `
-
-    <div class="notification-card">
-
-        <p>
-            No Notifications Found
-        </p>
-
-    </div>
-
-    `;
-
-    return;
-
-}
+    .then(response => response.json())
 
 
 
-    // LOOP THROUGH DATA
+        .then(data => {
 
-    notifications.forEach(
-    (notification,index) => {
+    console.log("DATA FROM FLASK:");
+    console.log(data);
 
-        notificationsContainer.innerHTML += `
+    notifications = data;
+        // STORE DATA FROM FLASK
 
-        <div class="notification-card">
+        notifications = data;
 
-            <div class="notification-header">
+        // CLEAR OLD HTML
 
-                <h3>
-                    ${notification.title}
-                </h3>
+        notificationsContainer.innerHTML = "";
 
-                <span>
-                    ${notification.time}
-                </span>
+        // NO NOTIFICATIONS
+
+        if(notifications.length === 0){
+
+            notificationsContainer.innerHTML = `
+
+            <div class="notification-card">
+
+                <p>
+                    No Notifications Found
+                </p>
 
             </div>
 
-            <p>
-                Location:
-                ${notification.location}
-            </p>
+            `;
 
-            <div class="notification-actions">
+            return;
 
-                <button
-                class="clear-btn"
-                onclick="clearNotification(${index})">
+        }
 
-                    Clear
+        // LOOP THROUGH DATA
 
-                </button>
+        notifications.forEach(
+        (notification,index) => {
+
+            notificationsContainer.innerHTML += `
+
+            <div class="notification-card">
+
+                <div class="notification-header">
+
+                    <h3>
+                        ${notification.title}
+                    </h3>
+
+                    <span>
+                        ${notification.time}
+                    </span>
+
+                </div>
+
+                <p>
+                    Location:
+                    ${notification.location}
+                </p>
+
+                <div class="notification-actions">
+
+                    <button
+                    class="clear-btn"
+                   onclick="clearNotification(${notification.id})">
+
+                        Clear
+
+                    </button>
+
+                </div>
 
             </div>
 
-        </div>
+            `;
 
-        `;
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Error loading notifications:",
+            error
+        );
 
     });
 
@@ -161,55 +186,48 @@ function loadNotifications(){
 // CLEAR NOTIFICATION
 // ==========================
 
-function clearNotification(index){
+function clearNotification(id){
 
-    // REMOVE NOTIFICATION
+    alert("Clear button clicked");
 
-    notifications.splice(index,1);
+    fetch(
 
+        `http://127.0.0.1:5000/notifications/${id}`,
 
-
-    // UPDATE STORAGE
-
-    localStorage.setItem(
-        "notifications",
-        JSON.stringify(notifications)
-    );
-
-
-
-    // STOP BELL IF EMPTY
-
-    if(notifications.length === 0){
-
-        const bell =
-        document.querySelector(".bell");
-
-        if(bell){
-
-            bell.classList.remove("ringing");
-
+        {
+            method: "DELETE"
         }
 
-    }
+    )
 
+    .then(response => {
 
+        console.log("RESPONSE RECEIVED");
 
-    // RELOAD UI
+        return response.json();
 
-    loadNotifications();
+    })
 
+    .then(data => {
 
+        console.log("SERVER DATA:", data);
 
-    // POPUP
+        loadNotifications();
 
-    showPopup(
-        "Notification Cleared!",
-        "success"
-    );
+        showPopup(
+            "Notification Cleared!",
+            "success"
+        );
+
+    })
+
+    .catch(error => {
+
+        console.error("ERROR:", error);
+
+    });
 
 }
-
 
 
 // ==========================
