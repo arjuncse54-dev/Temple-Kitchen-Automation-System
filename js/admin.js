@@ -1,5 +1,15 @@
 // js/admin.js
 
+if (
+    localStorage.getItem("loggedIn")
+    !== "true"
+) {
+
+    window.location.href =
+    "../login.html";
+
+}
+
 // LIVE CLOCK
 
 function updateClock(){
@@ -26,6 +36,22 @@ setInterval(updateClock, 1000);
 
 // INITIAL CALL
 updateClock();   
+
+
+//Logout
+
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click", function (e) {
+
+    e.preventDefault();
+
+    localStorage.removeItem("loggedIn");
+
+    window.location.href = "../index.html";
+
+});
 
 
 // ==========================

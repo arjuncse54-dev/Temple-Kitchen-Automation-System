@@ -1,80 +1,56 @@
- 
+const loginForm = document.getElementById("loginForm");
 
- const loginForm =
-document.getElementById(
-    "loginForm"
-);
+loginForm.addEventListener("submit", function (event) {
 
+    event.preventDefault();
 
-loginForm.addEventListener(
+    const email = document.getElementById("email").value;
 
-    "submit",
+    const password = document.getElementById("password").value;
 
-    function(event){
+    fetch("http://127.0.0.1:5000/login", {
 
-        alert("Form Submitted");
+        method: "POST",
 
-        event.preventDefault();
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-        const email =
-        document.getElementById("email").value;
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
 
-        const password =
-        document.getElementById("password").value;
+    })
 
-        alert("Email: " + email);
+    .then(response => response.json())
 
-        fetch(
-            "http://127.0.0.1:5000/login",
+    .then(data => {
 
+   if (data.success) {
 
+    localStorage.setItem(
+        "loggedIn",
+        "true"
+    );
 
-            {
+    window.location.href =
+    "./admin/dashboard.html";
 
-                method: "POST",
+}else {
 
-                headers: {
+            alert("Invalid Email or Password");
 
-                    "Content-Type":
-                    "application/json"
+        }
 
-                },
+    })
 
-                body: JSON.stringify({
+    .catch(error => {
 
-                    email: email,
+        console.error("Login Error:", error);
 
-                    password: password
+        alert("Unable to connect to server");
 
-                })
+    });
 
-            }
-
-        )
-
-        .then(response =>
-            response.json()
-        )
-
-        .then(data => {
-
-            if(data.success){
-
-              window.location.href =
-"./admin/dashboard.html";
-
-            }
-
-            else{
-
-                alert(
-                    "Invalid Email or Password"
-                );
-
-            }
-
-        });
-
-    }
-
-); 
+});
