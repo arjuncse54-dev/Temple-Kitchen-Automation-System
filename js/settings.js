@@ -1,4 +1,14 @@
-// ==========================
+   
+   
+   const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}// ==========================
 // LIVE CLOCK
 // ==========================
 
@@ -285,3 +295,25 @@ function(){
     updateSystemStatus();
 
 });
+
+
+
+///===
+
+  const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}

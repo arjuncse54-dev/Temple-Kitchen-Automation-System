@@ -1,3 +1,14 @@
+  
+  
+  const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}
 // ==========================
 // LIVE CLOCK
 // ==========================
@@ -158,25 +169,31 @@ searchInput.addEventListener(
 
         const filteredReports =
 
-        reports.filter(report =>
+reports.filter(report =>
 
-            report.violation
-            .toLowerCase()
-            .includes(value)
+    report.user
+    .toLowerCase()
+    .includes(value)
 
-            ||
+    ||
 
-            report.location
-            .toLowerCase()
-            .includes(value)
+    report.violation
+    .toLowerCase()
+    .includes(value)
 
-            ||
+    ||
 
-            report.status
-            .toLowerCase()
-            .includes(value)
+    report.location
+    .toLowerCase()
+    .includes(value)
 
-        );
+    ||
+
+    report.status
+    .toLowerCase()
+    .includes(value)
+
+);
 
 
 
@@ -293,5 +310,24 @@ function viewReport(index){
         "Status: " + report.status
 
     );
+
+}
+
+//===  
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
 
 }

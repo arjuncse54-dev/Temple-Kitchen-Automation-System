@@ -1,3 +1,5 @@
+
+    
 // ==========================
 // LIVE CLOCK
 // ==========================
@@ -149,12 +151,36 @@ document.getElementById("stopBtn");
 
 
 
+
 // ==========================
 // GET NOTIFICATIONS
 // ==========================
 
-let notifications =
-getNotifications();
+let notifications = [];
+
+const userId =
+localStorage.getItem("user_id");
+fetch(
+    `http://127.0.0.1:5000/user-notifications/${userId}`
+)
+
+.then(response => response.json())
+
+.then(data => {
+
+    notifications = data;
+
+    loadNotifications();
+
+    updateCounters();
+
+    updateAnalytics();
+
+    updateSystemHealth();
+
+    loadRecentActivity();
+
+});
 
 
 
@@ -203,78 +229,65 @@ function loadNotifications() {
 
 
 
-
 // ==========================
 // LOAD WARNINGS
 // ==========================
 
 function loadWarnings() {
 
-    // CLEAR OLD UI
-
     warningsContainer.innerHTML = "";
 
+    const userId =
+    localStorage.getItem("user_id");
 
+    fetch(
+        `http://127.0.0.1:5000/user-warnings/${userId}`
+    )
 
-    // GET WARNINGS
-const warnings =
-getWarnings();
+    .then(response => response.json())
 
+    .then(warnings => {
 
+        if(warnings.length === 0){
 
-    // EMPTY STATE
+            warningsContainer.innerHTML = `
 
-    if(warnings.length === 0){
+            <div class="warning-box">
 
-        warningsContainer.innerHTML = `
+                No Warnings Found
 
-        <div class="warning-box">
+            </div>
 
-            No Warnings Found
+            `;
 
-        </div>
+            return;
 
-        `;
+        }
 
-        return;
+        warnings.forEach(warning => {
 
-    }
+            warningsContainer.innerHTML += `
 
+            <div class="warning-box">
 
+                <p>
+                    ⚠️ ${warning.title}
+                </p>
 
-    // LOAD WARNINGS
+                <small>
+                    ${warning.location}
+                    - ${warning.time}
+                </small>
 
-    warnings.forEach((warning,index) => {
+            </div>
 
-        warningsContainer.innerHTML += `
+            `;
 
-        <div class="warning-box">
-
-            <p>
-                ⚠️ ${warning.title}
-            </p>
-
-            <small>
-                ${warning.location}
-                - ${warning.time}
-            </small>
-            <button
-class="warning-clear-btn"
-onclick="clearWarning(${index})">
-
-    Clear
-
-</button>
-
-        </div>
-
-        `;
+        });
 
     });
 
 }
-
-
 
 // ==========================
 // START ALERT
@@ -403,62 +416,53 @@ document.getElementById("todayAlerts");
 
 
 // UPDATE COUNTERS
-
 function updateCounters(){
 
     // TOTAL ALERTS
+
     totalAlerts.innerText =
     notifications.length;
 
-    // GET WARNINGS
+    const userId =
+    localStorage.getItem("user_id");
 
-const warnings =
-getWarnings();
+    fetch(
+        `http://127.0.0.1:5000/user-warnings/${userId}`
+    )
 
-// TOTAL WARNINGS
+    .then(response => response.json())
 
-totalWarnings.innerText =
-warnings.length;
+    .then(warnings => {
 
-  
+        totalWarnings.innerText =
+        warnings.length;
 
-    // TODAY ALERTS
-    todayAlerts.innerText =
-    notifications.length;
+        if(warnings.length > 0){
 
-    // ALERT STATUS
+            alertStatus.innerText =
+            "Active";
 
-    if(notifications.length > 0){
+        }
+        else{
 
-        alertStatus.innerText =
-        "Active";
+            alertStatus.innerText =
+            "Inactive";
 
-    }
-    else{
+        }
 
-        alertStatus.innerText =
-        "Inactive";
-
-    }
+    });
 
 }
-
 
 // ==========================
 // INITIAL UPDATE
 // ==========================
 
-loadNotifications();
+
 
 loadWarnings();
 
-updateCounters();
 
-updateAnalytics();
-
-updateSystemHealth();
-
-loadRecentActivity();
 
 
 
@@ -855,3 +859,26 @@ function(){
     },1000);
 
 });
+
+
+
+
+//===
+
+ const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}

@@ -1,4 +1,17 @@
-// LIVE CLOCK
+const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}   
+
+   
+   
+   
+   // LIVE CLOCK
 
 function updateClock(){
 
@@ -63,127 +76,6 @@ function showPopup(message, type){
 
 }
 
-
-// INFORM BUTTONS
-
-const informButtons =
-document.querySelectorAll(".inform-btn");
-
-
-informButtons.forEach(button => {
-
-    button.addEventListener("click", function(){
-
-        // ==========================
-        // CREATE WARNING
-        // ==========================
-
-     fetch(
-
-    "http://127.0.0.1:5000/notifications",
-
-    {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-            title: "No Hairnet",
-
-            location: "Kitchen Entry",
-
-            time: new Date().toLocaleTimeString()
-
-        })
-
-    }
-
-)
-
-.then(response => response.json())
-
-.then(data => {
-
-    showPopup(
-
-        "Warning Sent Successfully!",
-
-        "success"
-
-    );
-
-})
-
-.catch(error => {
-
-    console.error(error);
-
-});
-
-
-
-
-
-        // ==========================
-        // CREATE REPORT
-        // ==========================
-
-        const report = {
-
-            user: "Ravi Sharma",
-
-            violation: "No Hairnet",
-
-            location: "Kitchen Entry",
-
-            time: new Date().toLocaleTimeString(),
-
-            status: "Warning Sent"
-
-        };
-
-
-        // GET OLD REPORTS
-
-        let reports =
-        JSON.parse(
-            localStorage.getItem("reports")
-        ) || [];
-
-
-        // ADD REPORT
-
-        reports.push(report);
-
-
-        // SAVE REPORTS
-
-        localStorage.setItem(
-            "reports",
-            JSON.stringify(reports)
-        );
-
-
-
-        // ==========================
-        // SHOW POPUP
-        // ==========================
-
-        showPopup(
-            "Warning Sent Successfully!",
-            "success"
-        );
-
-    });
-
-});
-
 // SEARCH FUNCTION 
 
 const searchInput =
@@ -212,3 +104,124 @@ searchInput.addEventListener("keyup", function(){
     });
 
 });
+
+
+fetch("http://127.0.0.1:5000/users")
+
+.then(response => response.json())
+
+.then(users => {
+
+    const userTable =
+    document.getElementById("userTable");
+
+    userTable.innerHTML = "";
+
+    users.forEach(user => {
+
+        userTable.innerHTML += `
+
+        <tr>
+
+            <td>User ${user.id}</td>
+
+            <td>${user.email}</td>
+
+            <td>-</td>
+
+            <td>
+                <span class="status active-status">
+                    Active
+                </span>
+            </td>
+
+            <td>
+                <button
+                    class="inform-btn"
+                    data-user-id="${user.id}"
+                >
+                    INFORM
+                </button>
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    // ATTACH EVENTS TO NEW BUTTONS
+
+    const informButtons =
+    document.querySelectorAll(".inform-btn");
+
+    informButtons.forEach(button => {
+
+        button.addEventListener("click", function(){
+
+            const userId =
+            this.dataset.userId;
+            
+fetch(
+    "http://127.0.0.1:5000/warnings",
+    {
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            user_id: userId,
+
+            title: "No Hairnet",
+
+            location: "Kitchen Entry",
+
+            time: new Date().toLocaleTimeString()
+
+        })
+
+    }
+)
+
+.then(response => response.json())
+
+.then(data => {
+
+    showPopup(
+        "Warning Sent Successfully!",
+        "success"
+    );
+
+});
+
+        });
+
+    });
+
+});
+
+
+
+///===
+
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}

@@ -1,15 +1,16 @@
 // js/admin.js
 
-if (
-    localStorage.getItem("loggedIn")
-    !== "true"
-) {
+
+
+const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
 
     window.location.href =
     "../login.html";
 
 }
-
 // LIVE CLOCK
 
 function updateClock(){
@@ -38,20 +39,7 @@ setInterval(updateClock, 1000);
 updateClock();   
 
 
-//Logout
 
-
-document
-.getElementById("logoutBtn")
-.addEventListener("click", function (e) {
-
-    e.preventDefault();
-
-    localStorage.removeItem("loggedIn");
-
-    window.location.href = "../index.html";
-
-});
 
 
 // ==========================
@@ -181,3 +169,22 @@ function loadRecentAlerts(){
 // LOAD ALERTS
 
 loadRecentAlerts();
+
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../index.html";
+
+    });
+
+}

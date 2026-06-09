@@ -1,3 +1,12 @@
+const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}
 // ==========================
 // LIVE CLOCK
 // ==========================
@@ -235,3 +244,23 @@ function clearNotification(id){
 // ==========================
 
 loadNotifications();
+
+//====
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}

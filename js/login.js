@@ -25,23 +25,49 @@ loginForm.addEventListener("submit", function (event) {
 
     .then(response => response.json())
 
-    .then(data => {
 
-   if (data.success) {
+    
+.then(data => {
 
-    localStorage.setItem(
-        "loggedIn",
-        "true"
-    );
+    console.log("LOGIN RESPONSE:", data);
 
-    window.location.href =
-    "./admin/dashboard.html";
+    if(data.success){
 
-}else {
+        localStorage.setItem(
+            "loggedIn",
+            "true"
+        );
 
-            alert("Invalid Email or Password");
+        localStorage.setItem(
+            "user_id",
+            data.user_id
+        );
+
+        localStorage.setItem(
+            "email",
+            data.email
+        );
+
+        if(data.email === "admin@temple.com"){
+
+            window.location.href =
+            "./admin/dashboard.html";
 
         }
+        else{
+
+            window.location.href =
+            "./user/dashboard.html";
+
+        }
+
+    } else {
+
+        alert(data.message);
+
+    }
+
+})
 
     })
 
@@ -52,5 +78,3 @@ loginForm.addEventListener("submit", function (event) {
         alert("Unable to connect to server");
 
     });
-
-});

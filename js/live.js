@@ -1,3 +1,12 @@
+const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}
 // ==========================
 // LIVE CLOCK
 // ==========================
@@ -147,51 +156,68 @@ detectButtons.forEach(button => {
 
         // CREATE NOTIFICATION
 
-        const notification = {
+        fetch(
 
-            title:title,
+    "http://127.0.0.1:5000/detect-violation",
 
-            location:location,
+    {
 
-            time:new Date()
-            .toLocaleTimeString()
+        method: "POST",
 
-        };
+        headers: {
 
+            "Content-Type":
+            "application/json"
 
+        },
 
-        // GET OLD NOTIFICATIONS
+        body: JSON.stringify({
 
-        let notifications =
-        JSON.parse(
-            localStorage.getItem(
-                "notifications"
-            )
-        ) || [];
+            violation: title
 
+        })
 
+    }
 
-        // ADD NEW NOTIFICATION
+)
 
-        notifications.push(notification);
+.then(response => response.json())
 
+.then(data => {
 
+    showPopup(
 
-        // SAVE AGAIN
+        "AI Detection Triggered!"
 
-        localStorage.setItem(
-            "notifications",
-            JSON.stringify(notifications)
-        );
+    );
 
+})
 
+.catch(error => {
 
-        // POPUP
+    console.error(error);
 
-        showPopup(
-            "AI Detection Triggered!"
-        );
+});
 
     });
 
 });
+
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        localStorage.removeItem("user_id");
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}

@@ -1,3 +1,12 @@
+  const userId =
+localStorage.getItem("user_id");
+
+if(!userId){
+
+    window.location.href =
+    "../login.html";
+
+}
 // ==========================
 // LIVE CLOCK
 // ==========================
@@ -102,33 +111,33 @@ function showPopup(message, type){
 
 window.onload = function(){
 
-    const savedName =
-    localStorage.getItem("name");
+    const userId =
+    localStorage.getItem("user_id");
 
-    const savedEmail =
-    localStorage.getItem("email");
+    fetch(
+        `http://127.0.0.1:5000/profile/${userId}`
+    )
 
-    const savedPhone =
-    localStorage.getItem("phone");
+    .then(response => response.json())
 
-    const savedPassword =
-    localStorage.getItem("password");
+  
 
-    if(savedName){
-        nameInput.value = savedName;
-    }
 
-    if(savedEmail){
-        emailInput.value = savedEmail;
-    }
+    .then(user => {
 
-    if(savedPhone){
-        phoneInput.value = savedPhone;
-    }
+    nameInput.value =
+    user.name;
 
-    if(savedPassword){
-        passwordInput.value = savedPassword;
-    }
+    emailInput.value =
+    user.email;
+
+    phoneInput.value =
+    user.phone;
+
+    passwordInput.value =
+    user.password;
+
+})
 
 };
 
@@ -140,33 +149,53 @@ window.onload = function(){
 
 saveBtn.addEventListener("click", function(){
 
-    // SAVE DATA
+    const userId =
+    localStorage.getItem("user_id");
 
-    localStorage.setItem(
-        "name",
-        nameInput.value
-    );
+    fetch(
 
-    localStorage.setItem(
-        "email",
-        emailInput.value
-    );
+        "http://127.0.0.1:5000/update-profile",
 
-    localStorage.setItem(
-        "phone",
-        phoneInput.value
-    );
+        {
 
-    localStorage.setItem(
-        "password",
-        passwordInput.value
-    );
+            method: "POST",
 
-    // SHOW POPUP
+            headers: {
 
-    showPopup(
-        "Profile Saved Successfully!",
-        "success"
-    );
+                "Content-Type":
+                "application/json"
+
+            },
+body: JSON.stringify({
+
+    user_id: userId,
+
+    name: nameInput.value,
+
+    email: emailInput.value,
+
+    phone: phoneInput.value,
+
+    password: passwordInput.value
+
+})
+
+        }
+
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        showPopup(
+
+            "Profile Updated Successfully!",
+
+            "success"
+
+        );
+
+    });
 
 });
