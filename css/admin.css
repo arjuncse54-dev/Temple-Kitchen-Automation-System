@@ -163,6 +163,18 @@ a{
     color: black;
 }
 
+.live-camera{
+
+    width:100%;
+
+    height:350px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+}
+
 /* ALERTS */
 .recent-alerts{
     background-color: #1f2937;

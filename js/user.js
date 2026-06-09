@@ -156,32 +156,37 @@ document.getElementById("stopBtn");
 // GET NOTIFICATIONS
 // ==========================
 
-let notifications = [];
-
 const userId =
 localStorage.getItem("user_id");
-fetch(
-    `http://127.0.0.1:5000/user-notifications/${userId}`
-)
 
-.then(response => response.json())
+function loadUserNotifications(){
 
-.then(data => {
+    fetch(
+        `http://127.0.0.1:5000/user-notifications/${userId}`
+    )
 
-    notifications = data;
+    .then(response => response.json())
 
-    loadNotifications();
+    .then(data => {
 
-    updateCounters();
+        notifications = data;
 
-    updateAnalytics();
+        loadNotifications();
 
-    updateSystemHealth();
+        updateCounters();
 
-    loadRecentActivity();
+        loadRecentActivity();
 
-});
+    });
 
+}
+loadUserNotifications();
+
+setInterval(() => {
+
+    loadUserNotifications();
+
+}, 5000);
 
 
 // ==========================
@@ -461,6 +466,12 @@ function updateCounters(){
 
 
 loadWarnings();
+
+setInterval(() => {
+
+    loadWarnings();
+
+}, 5000);
 
 
 

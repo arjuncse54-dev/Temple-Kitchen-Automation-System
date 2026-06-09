@@ -221,3 +221,108 @@ if(logoutBtn){
     });
 
 }
+
+let simulationRunning = false;
+
+const simulationBtn =
+document.getElementById(
+    "startSimulation"
+);
+
+simulationBtn.addEventListener(
+
+    "click",
+
+    function(){
+
+        alert("Simulation Started");
+
+        if(simulationRunning){
+
+            return;
+
+        }
+
+        simulationRunning = true;
+
+        setInterval(() => {
+
+         alert(
+    "AUTO DETECTION RUNNING"
+);
+
+            const violations = [
+
+                "No Hairnet Detected",
+
+                "No Gloves Detected",
+
+                "No Apron Detected"
+
+            ];
+
+            const randomViolation =
+
+            violations[
+
+                Math.floor(
+                    Math.random()
+                    * violations.length
+                )
+
+            ];
+
+            fetch(
+
+                "http://127.0.0.1:5000/detect-violation",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                        "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        violation:
+                        randomViolation
+
+                    })
+
+                }
+
+            )
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                    console.log(
+                        "DETECTION SENT",
+                        data
+                    );
+
+                showPopup(
+                    randomViolation
+                );
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    error
+                );
+
+            });
+
+        }, 10000);
+
+    }
+
+);

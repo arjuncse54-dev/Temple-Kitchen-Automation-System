@@ -570,18 +570,13 @@ def user_notifications(user_id):
 
     cursor = conn.cursor()
 
-    cursor.execute(
+    cursor.execute("""
 
-        """
         SELECT *
         FROM notifications
-        WHERE user_id = ?
         ORDER BY id DESC
-        """,
 
-        (user_id,)
-
-    )
+    """)
 
     rows = cursor.fetchall()
 
@@ -696,6 +691,7 @@ def get_user_warnings(user_id):
         })
 
     return warnings
+
 
 
     
@@ -946,6 +942,8 @@ def reports():
         })
 
     return reports
+
+    
 
 
 # ==========================
