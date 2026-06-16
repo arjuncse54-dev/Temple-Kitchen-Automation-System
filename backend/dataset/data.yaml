@@ -1,0 +1,16 @@
+ train: train/images
+ val: train/images
+ test: train/images
+
+
+ nc: 2
+ names: ['hairnet-detection', 'no-hairnet']
+
+ py roboflow:
+  workspace: arjun-wdngr
+  project: hairnet-detection-bfldn
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/arjun-wdngr/hairnet-detection-bfldn/dataset/1
+
+ 

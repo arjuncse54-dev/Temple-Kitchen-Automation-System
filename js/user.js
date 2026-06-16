@@ -114,6 +114,9 @@ document.getElementById(
 const bell =
 document.getElementById("bell");
 
+let previousNotificationCount = 0;
+let previousWarningCount = 0;
+
 
 // ==========================
 // ENABLE AUDIO AFTER CLICK
@@ -169,15 +172,34 @@ function loadUserNotifications(){
 
     .then(data => {
 
-        notifications = data;
+    notifications = data;
 
-        loadNotifications();
+    // NEW NOTIFICATION DETECTED
+    if(
+        previousNotificationCount > 0 &&
+        notifications.length >
+        previousNotificationCount
+    ){
 
-        updateCounters();
+        startAlert();
 
-        loadRecentActivity();
+        showPopup(
+            "New Violation Detected!",
+            "warning"
+        );
 
-    });
+    }
+
+    previousNotificationCount =
+    notifications.length;
+
+    loadNotifications();
+
+    updateCounters();
+
+    loadRecentActivity();
+
+});
 
 }
 loadUserNotifications();
@@ -252,6 +274,23 @@ function loadWarnings() {
     .then(response => response.json())
 
     .then(warnings => {
+        if(
+    previousWarningCount > 0 &&
+    warnings.length >
+    previousWarningCount
+){
+
+    startAlert();
+
+    showPopup(
+        "New Warning Received!",
+        "warning"
+    );
+
+}
+
+previousWarningCount =
+warnings.length;
 
         if(warnings.length === 0){
 

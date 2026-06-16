@@ -251,6 +251,9 @@ CREATE TABLE IF NOT EXISTS warnings (
 """)
     
     
+    
+    
+    
 
 
 
@@ -263,6 +266,27 @@ CREATE TABLE IF NOT EXISTS warnings (
 # ==========================
 # TEMPORARY DATA
 # ==========================
+
+@app.route("/all-warnings")
+def all_warnings():
+
+    conn = sqlite3.connect(
+        "temple_kitchen.db"
+    )
+
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM warnings ORDER BY id DESC"
+    )
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return [dict(row) for row in rows]
 
 
 
@@ -609,8 +633,6 @@ def add_warning():
 
     data = request.json
 
-    print("Warning Data:", data)
-
     conn = sqlite3.connect(
         "temple_kitchen.db"
     )
@@ -618,30 +640,20 @@ def add_warning():
     cursor = conn.cursor()
 
     cursor.execute("""
-
         INSERT INTO warnings
         (user_id, title, location, time)
-
         VALUES (?, ?, ?, ?)
-
     """, (
-
         data["user_id"],
         data["title"],
         data["location"],
         data["time"]
-
     ))
 
     conn.commit()
-
     conn.close()
 
-    return jsonify({
-
-        "message": "Warning Added"
-
-    })
+    return {"message": "Warning Added"}
 
 
 # ==========================
@@ -798,7 +810,10 @@ def update_profile():
 # LIVE CAMERA
 # ==========================
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(
+    "http://192.168.1.101:8080/video"
+)
+print("Camera Opened:", camera.isOpened())
 
 def generate_frames():
 
@@ -842,51 +857,32 @@ def video_feed():
 # AI DETECTION
 # ==========================
 
-@app.route(
-    "/detect-violation",
-    methods=["POST"]
-)
+@app.route("/detect-violation", methods=["POST"])
 def detect_violation():
 
     data = request.json
 
     violation = data["violation"]
 
-    conn = sqlite3.connect(
-        "temple_kitchen.db"
-    )
+    conn = sqlite3.connect("temple_kitchen.db")
 
     cursor = conn.cursor()
 
     cursor.execute("""
-
         INSERT INTO notifications
-        (title, location, time)
-
-        VALUES (?, ?, ?)
-
+        (user_id, title, location, time)
+        VALUES (?, ?, ?, ?)
     """, (
-
+        1,  # temporary user id
         violation,
-
         "Kitchen Entry",
-
-        datetime.now()
-        .strftime("%I:%M:%S %p")
-
+        datetime.now().strftime("%I:%M:%S %p")
     ))
 
     conn.commit()
-
     conn.close()
 
-    return {
-
-        "success": True
-
-    }
-    
-
+    return {"success": True}
 
     # ==========================
 # REPORTS
@@ -954,12 +950,27 @@ init_db()
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    conn = sqlite3.connect("temple_kitchen.db")
+cursor = conn.cursor()
+
+cursor.execute("PRAGMA table_info(notifications)")
+print("NOTIFICATIONS TABLE:")
+print(cursor.fetchall())
+
+cursor.execute("PRAGMA table_info(warnings)")
+print("WARNINGS TABLE:")
+print(cursor.fetchall())
+
+conn.close()
+app.run(debug=True)
 
   
 
 
 
+
+# =======
+# test_hairnet.py 
 
 
     
