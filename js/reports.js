@@ -6,7 +6,7 @@ localStorage.getItem("user_id");
 if(!userId){
 
     window.location.href =
-    "../login.html";
+    "../index.html";
 
 }
 // ==========================
@@ -326,7 +326,7 @@ if(logoutBtn){
         localStorage.removeItem("user_id");
 
         window.location.href =
-        "../login.html";
+        "../index.html";
 
     });
 

@@ -99,3 +99,4 @@ function saveSettings(data){
     );
 
 }
+

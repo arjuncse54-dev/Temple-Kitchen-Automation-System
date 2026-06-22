@@ -9,7 +9,7 @@ model = YOLO(
 
 last_alert_time = 0
 
-url = "http://192.168.1.101:8080/video"
+url = "http://10.128.132.167:8080/video"
 
 cap = cv2.VideoCapture(url)
 

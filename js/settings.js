@@ -6,7 +6,7 @@ localStorage.getItem("user_id");
 if(!userId){
 
     window.location.href =
-    "../login.html";
+    "../index.html";
 
 }// ==========================
 // LIVE CLOCK
@@ -312,7 +312,7 @@ if(logoutBtn){
         localStorage.removeItem("user_id");
 
         window.location.href =
-        "../login.html";
+        "../index.html";
 
     });
 

@@ -811,7 +811,7 @@ def update_profile():
 # ==========================
 
 camera = cv2.VideoCapture(
-    "http://192.168.1.101:8080/video"
+    "http://10.128.132.167:8080/video"
 )
 print("Camera Opened:", camera.isOpened())
 

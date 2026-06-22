@@ -113,9 +113,11 @@ document.getElementById(
 
 const bell =
 document.getElementById("bell");
+let notifications = [];
 
 let previousNotificationCount = 0;
 let previousWarningCount = 0;
+
 
 
 // ==========================
@@ -172,34 +174,52 @@ function loadUserNotifications(){
 
     .then(data => {
 
-    notifications = data;
+        notifications = data;
 
-    // NEW NOTIFICATION DETECTED
-    if(
-        previousNotificationCount > 0 &&
-        notifications.length >
-        previousNotificationCount
-    ){
+        // NEW NOTIFICATION DETECTED
+       if(
+    previousNotificationCount > 0 &&
+    notifications.length >
+    previousNotificationCount
+){
 
-        startAlert();
+   bell.classList.add("ringing");
 
-        showPopup(
-            "New Violation Detected!",
-            "warning"
-        );
+showPopup(
+    "⚠️ Violation Detected!",
+    "warning"
+);
 
-    }
+alertSound.currentTime = 0;
 
-    previousNotificationCount =
-    notifications.length;
+alertSound.play()
+.catch(error => {
 
-    loadNotifications();
-
-    updateCounters();
-
-    loadRecentActivity();
+    console.log(error);
 
 });
+
+}
+
+        previousNotificationCount =
+        notifications.length;
+
+        loadNotifications();
+
+        updateCounters();
+
+        loadRecentActivity();
+
+    })
+
+    .catch(error => {
+
+        console.log(
+            "Notification Error:",
+            error
+        );
+
+    });
 
 }
 loadUserNotifications();
@@ -280,13 +300,35 @@ function loadWarnings() {
     previousWarningCount
 ){
 
-    startAlert();
+ bell.classList.add("ringing");
 
-    showPopup(
-        "New Warning Received!",
-        "warning"
-    );
+showPopup(
+    "⚠️ New Warning Received!",
+    "warning"
+);
 
+alertSound.currentTime = 0;
+
+alertSound.play()
+.catch(error => {
+
+    console.log(error);
+
+});bell.classList.add("ringing");
+
+showPopup(
+    "⚠️ New Warning Received!",
+    "warning"
+);
+
+alertSound.currentTime = 0;
+
+alertSound.play()
+.catch(error => {
+
+    console.log(error);
+
+});
 }
 
 previousWarningCount =
@@ -336,58 +378,54 @@ warnings.length;
 // ==========================
 // START ALERT
 // ==========================
+
 function startAlert(){
 
-    const settings =
-    getSettings();
+    bell.classList.add("ringing");
 
+    alertSound.pause();
 
+    alertSound.currentTime = 0;
 
-    // START BELL
+    alertSound.loop = true;
 
-    if(settings.notifications){
+    alertSound.play()
+    .then(() => {
 
-        bell.classList.add("ringing");
+        console.log(
+            "Alert Started"
+        );
 
-    }
+    })
+    .catch(error => {
 
+        console.log(
+            "Audio Error:",
+            error
+        );
 
-
-    // PLAY SOUND
-
-    if(settings.sound){
-
-        alertSound.currentTime = 0;
-
-       alertSound.play()
-.catch(error => {
-
-    console.log(error);
-
-});
-
-    }
+    });
 
 }
-
-
 
 // ==========================
 // STOP ALERT
 // ==========================
 
-stopBtn.addEventListener("click", function () {
+stopBtn.addEventListener(
+"click",
+function(){
 
-    // STOP SOUND
     alertSound.pause();
 
-    // RESET AUDIO
     alertSound.currentTime = 0;
 
-    // STOP BELL
-    bell.classList.remove("ringing");
+    alertSound.loop = false;
 
-    // SHOW POPUP
+    bell.classList.remove(
+        "ringing"
+    );
+
     showPopup(
         "Alert Ring Stopped!",
         "success"
@@ -927,8 +965,18 @@ if(logoutBtn){
         localStorage.removeItem("user_id");
 
         window.location.href =
-        "../login.html";
+        "../index.html";
 
     });
 
 }
+bell.addEventListener(
+    "click",
+    function(){
+
+        bell.classList.remove(
+            "ringing"
+        );
+
+    }
+);
